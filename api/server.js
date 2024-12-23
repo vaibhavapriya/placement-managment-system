@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
@@ -8,6 +9,8 @@ require('dotenv').config();
 
 // Initialize the app
 const app = express();
+app.use(bodyParser.json());
+
 
 // Connect to MongoDB
 connectDB();
