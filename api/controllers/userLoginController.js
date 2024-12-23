@@ -41,9 +41,27 @@ exports.signup = async (req, res) => {
   
       const userExists = await User.findOne({ email });
       if (userExists) return res.status(400).json({ message: 'User already exists' });
-  
+      
       const newUser = new User({ name, email, password ,role });
       await newUser.save();
+
+      // Role-Specific Data Creation
+      if (role === 'Student') {
+        await Student.create({
+            user: user._id,
+        });
+    } else if (role === 'Company') {
+        await Company.create({
+            user: user._id,
+        });
+    } else if (role === 'Admin') {
+        await Admin.create({
+            user: user._id,
+        });
+    } else {
+        return res.status(400).json({ message: 'Invalid role specified.' });
+    }
+
       res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
       res.status(500).json({ error: error.message });
