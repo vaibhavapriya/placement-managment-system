@@ -3,13 +3,18 @@ const Student = require('../models/studentSchema');
 const Company = require('../models/companySchema');
 const Admin = require('../models/adminSchema');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs'); 
+
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(email, password); 
     try {
         const user = await User.findOne({ email });
-        if (!user || user.password !== password) {
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid user' });
+        }
+        if ( !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
@@ -48,15 +53,15 @@ exports.signup = async (req, res) => {
       // Role-Specific Data Creation
       if (role === 'Student') {
         await Student.create({
-            user: user._id,
+            user: newUser._id,
         });
     } else if (role === 'Company') {
         await Company.create({
-            user: user._id,
+            user: newUser._id,
         });
     } else if (role === 'Admin') {
         await Admin.create({
-            user: user._id,
+            user: newUser._id,
         });
     } else {
         return res.status(400).json({ message: 'Invalid role specified.' });
