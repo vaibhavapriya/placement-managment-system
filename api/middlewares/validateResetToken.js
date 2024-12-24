@@ -1,6 +1,6 @@
 const User = require('../models/userSchema');
 
-const validateResetToken = async (req, res, next) => {
+exports.validateResetToken = async (req, res, next) => {
   const { token } = req.params;
 
   try {
@@ -20,6 +20,5 @@ const validateResetToken = async (req, res, next) => {
   }
 };
 
-module.exports = validateResetToken;
 
 

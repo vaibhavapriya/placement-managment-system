@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const Login = () => {
+    const { user, setUser } = useAuthContext();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { setUser } = useContext(AuthContext);
+    // const { setUser } = useContext(useAuthContext);
     const navigate = useNavigate();
 
     const handleLogin = async () => {

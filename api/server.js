@@ -27,7 +27,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 
 // Error Handling Middleware
-app.use(errorHandler);
+//app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;

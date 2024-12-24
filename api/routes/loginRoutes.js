@@ -1,12 +1,11 @@
 const express = require('express');
 const { forgotPassword,  resetPassword } = require('../controllers/loginController');
 const { login, signup } = require('../controllers/userLoginController');
-const { validateResetToken } = require('../middlewares/validateResetToken');
+const { validateResetToken } = require('../middlewares/validateResetToken')
 const { validateToken } = require('../middlewares/validateToken');
 const { checkRole } = require('../middlewares/checkRole')
 
 const router = express.Router();
-console.log({ forgotPassword, resetPassword, login, signup, validateToken, validateResetToken, checkRole });
 
 // Public route for login
 router.post('/login', login);
