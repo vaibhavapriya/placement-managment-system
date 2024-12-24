@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
-const driveRoutes = require('./routes/joblistingRoutes');
+//const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
 //const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
@@ -16,15 +16,14 @@ app.use(bodyParser.json());
 connectDB();
 
 // Middleware
-//app.use(cors()); // Use CORS middleware
-// app.use(cors({
-//     origin: 'netlify.app',
-// }));
+app.use(cors()); // Use CORS middleware
+ app.use(cors({
+     origin: 'http://localhost:5173', }));
 
 app.use(express.json());
 
 // Routes
-app.use('/jobs', driveRoutes);
+//app.use('/jobs', driveRoutes);
 app.use('/auth', authRoutes);
 
 // Error Handling Middleware

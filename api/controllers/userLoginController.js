@@ -1,7 +1,7 @@
-const User = require('../models/User');
-const Student = require('../models/Student');
-const Company = require('../models/Company');
-const Admin = require('../models/Admin');
+const User = require("../models/userSchema")
+const Student = require('../models/studentSchema');
+const Company = require('../models/companySchema');
+const Admin = require('../models/adminSchema');
 const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
