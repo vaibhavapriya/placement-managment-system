@@ -62,4 +62,16 @@ exports.deleteJob = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-d
+// Get all job listing
+exports.getAll = async (req, res) => {
+    try {
+         // Fetch job listings. You may want to consider filtering for students or adding pagination
+         const jobs = await JobListing.find();
+        
+         // Send back a successful response with the job listings
+         res.status(200).json({ jobs });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

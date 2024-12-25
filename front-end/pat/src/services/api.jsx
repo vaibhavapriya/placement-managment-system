@@ -1,9 +1,19 @@
-import React from 'react'
+import axios from 'axios';
 
-function api() {
-  return (
-    <div>api</div>
-  )
-}
+const API_URL = 'http://localhost:5000';
 
-export default api
+const getJobListings = async (token) => {
+    const response = await axios.get(`${API_URL}/jobs`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+};
+
+const getApplicantsForJob = async (token, jobId) => {
+    const response = await axios.get(`${API_URL}/jobs/${jobId}/applicants`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+};
+
+export { getJobListings, getApplicantsForJob };

@@ -1,10 +1,13 @@
 import React from 'react'
 import Dashboard from '../components/Dashboard'
+import AllJobs from '../components/AllJobs'
 
 function Companyhome() {
   return (
-    <div><Dashboard/>
-        <div></div>
+    <div>
+        <Dashboard/>
+        <button>add drive</button>
+        <AllJobs/>
     </div>
   )
 }

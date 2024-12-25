@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 //const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
+const jobRoutes = require('./routes/joblistingRoutes')
 //const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -26,7 +27,7 @@ app.use(cors()); // Use CORS middleware
 app.use(express.json());
 
 // Routes
-//app.use('/jobs', driveRoutes);
+app.use('/jobs', jobRoutes);
 app.use('/auth', authRoutes);
 
 // Error Handling Middleware
