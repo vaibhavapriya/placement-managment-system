@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { createJob, editJob, deleteJob, getAll } = require('../controllers/jobslistingController');
-const { isAuthorized } = require('../middleware/authMiddleware');
+const { isAuthorized } = require('../middlewares/isAuthorized');
 const { validateToken } = require('../middlewares/validateToken')
 // Create a job listing (only authorized users can do this)
 router.post('/create', isAuthorized, createJob);

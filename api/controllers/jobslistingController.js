@@ -1,5 +1,5 @@
 const JobListing = require('../models/jobListingSchema');  // Job listing model
-const User = require('../models/User');  // User model
+const User = require('../models/userSchema');  // User model
 
 // Create a job listing
 exports.createJob = async (req, res) => {

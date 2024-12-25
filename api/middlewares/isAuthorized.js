@@ -1,4 +1,4 @@
-const JobListing = require('../models/JobListing');
+const JobListing = require('../models/jobListingSchema');
 
 exports.isAuthorized = async (req, res, next) => {
     try {
