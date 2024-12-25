@@ -4,7 +4,7 @@ const Company = require('../models/companySchema');
 const Admin = require('../models/adminSchema');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs'); 
-
+let blacklistedTokens = []; 
 
 exports.login = async (req, res) => {
     const { email, password } = req.body; 
@@ -71,3 +71,12 @@ exports.signup = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+  exports.logout = async (req, res) => {
+    const token = req.header('Authorization')?.split(' ')[1];
+    if (!token) {
+        return res.status(400).json({ message: 'Token missing' });
+    }
+    // Add the token to a blacklist (if using one)
+    blacklistedTokens.push(token); // Example array for blacklisting
+    res.status(200).json({ message: 'Logged out successfully' });
+};

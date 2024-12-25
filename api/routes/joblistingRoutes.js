@@ -1,39 +1,16 @@
-// const express = require('express');
-// const {
-//     createJobListing,
-//     getJobListingById,
-//     getAllJobListings,
-//     updateJobListing,
-//     deleteJobListing,
-// } = require('../controllers/jobListingController');
+// jobListingRoutes.js
+const express = require('express');
+const router = express.Router();
+const { createJob, editJob, deleteJob } = require('../controllers/jobslistingController');
+const { isAuthorized } = require('../middleware/authMiddleware');
 
+// Create a job listing (only authorized users can do this)
+router.post('/create', isAuthorized, createJob);
 
-// const { verifyToken, checkRole } = require('../middlewares/authMiddleware');
+// Edit a job listing (only authorized users can do this)
+router.put('/edit/:jobId', isAuthorized, editJob);
 
-// const router = express.Router();
+// Delete a job listing (only authorized users can do this)
+router.delete('/delete/:jobId', isAuthorized, deleteJob);
 
-// // Create a new job listing
-// router.post('/', createJobListing);
-
-// // Get a job listing by ID
-// router.get('/:id', getJobListingById);
-
-// // Get all job listings
-// router.get('/', getAllJobListings);
-
-// // Update a job listing
-// router.put('/:id', updateJobListing);
-
-// // Delete a job listing
-// router.delete('/:id', deleteJobListing);
-// // Only students can create or update applications
-// router.post('/', verifyToken, checkRole(['Student']), createApplication);
-// router.patch('/:id', verifyToken, checkRole(['Student']), updateApplication);
-
-// // Admin access can be added to view all applications
-// router.get('/', verifyToken, checkRole(['Admin']), async (req, res) => {
-//     // Logic to get all applications
-// });
-
-
-// module.exports = router;
+module.exports = router;

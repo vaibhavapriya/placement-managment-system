@@ -1,6 +1,6 @@
 const express = require('express');
 const { forgotPassword,  resetPassword } = require('../controllers/loginController');
-const { login, signup } = require('../controllers/userLoginController');
+const { login, signup, logout} = require('../controllers/userLoginController');
 const { validateResetToken } = require('../middlewares/validateResetToken')
 const { validateToken } = require('../middlewares/validateToken');
 const { checkRole } = require('../middlewares/checkRole')
@@ -11,6 +11,8 @@ const router = express.Router();
 router.post('/login', login);
 
 router.post('/signup', signup);
+
+router.post('/logout', logout)
 
 // Protected route for students
 router.get('/student-data', validateToken, checkRole(['Student']), (req, res) => {

@@ -4,6 +4,7 @@ const jobListingSchema = new mongoose.Schema({
     title: String,
     description: String,
     package:Number,
+    location:String,
     requirements: [String],
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }],
 });
