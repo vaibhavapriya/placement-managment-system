@@ -23,3 +23,14 @@
 // router.get('/feedbacks', verifyToken, checkRole(['Student']), viewFeedbacks);
 
 // module.exports = router;
+// routes/applicationRoutes.js
+const express = require('express');
+const { validateToken } = require('../middlewares/validateToken');
+const { createApplication, getStudentApplications } = require('../controllers/studentController');
+
+const router = express.Router();
+
+router.post('/apply', validateToken, createApplication);
+router.get('/my-applications', validateToken, getStudentApplications);
+
+module.exports = router;
