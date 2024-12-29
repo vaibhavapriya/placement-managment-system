@@ -63,7 +63,7 @@ function Companyhome() {
     };
 
   return (
-    <div>
+    <div  className="w-screen min-h-screen">
         <Header/>
 
         {isModalOpen && <FormDrive closeModal={closeModal} />}

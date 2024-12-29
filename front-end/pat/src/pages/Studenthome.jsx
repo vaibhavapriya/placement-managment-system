@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import Header from '../components/Header';
+import DriveCard from '../components/DriveCard';
 
 function Studenthome() {
   //get student details using id(authContext) and store in contest @
@@ -38,15 +39,23 @@ function Studenthome() {
         setLoading(false); // Set loading to false after fetch is complete
       }
     };
-
+    //fetch applied jobs
     fetchJobs();
   }, []);
   console.log(jobs);
   
   return (
-    <div>
+    <div className=" min-h-screen">
         <Header/>
-        <div>All jobs map JobCard</div>
+        <section className="p-6">
+          <h2 className="text-lg font-semibold">Drives</h2>
+            <ul>
+              {jobs.map(job => (
+                //<li key={drive.id}>{drive.title}</li>
+                <DriveCard job={job} key={job._id}/>
+              ))}
+            </ul>
+        </section>
         <div>Applied jobs map jobCard</div>
     </div>
   )

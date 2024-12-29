@@ -39,7 +39,6 @@ exports.createJob = async (req, res) => {
         res.status(500).json({ message: 'Server error.' });
     }
 };
-
 exports.getCompanyJobs = async (req, res) => {
     try {
         const companyId = req.params.cuserid; // This is the User ID of the company
@@ -73,8 +72,6 @@ exports.getCompanyJobs = async (req, res) => {
         res.status(500).json({ message: 'Server error.' });
     }
 };
-
-// Get all job listing
 exports.getAllJobs = async (req, res) => {
     try {
          // Fetch job listings.

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const applicationSchema = new mongoose.Schema({
     student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
     job: { type: mongoose.Schema.Types.ObjectId, ref: 'JobListing' },

@@ -5,6 +5,8 @@ const connectDB = require('./config/db');
 //const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
 const jobRoutes = require('./routes/joblistingRoutes')
+const appRoutes = require('./routes/applicationRoutes')
+const stuRoutes = require('./routes/studentRoutes')
 //const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -27,8 +29,10 @@ app.use(cors()); // Use CORS middleware
 app.use(express.json());
 
 // Routes
+app.use('/a', appRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/auth', authRoutes);
+app.use('/student',stuRoutes);
 
 // Error Handling Middleware
 //app.use(errorHandler);

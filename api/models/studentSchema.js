@@ -6,11 +6,9 @@ const studentSchema = new mongoose.Schema({
     email: { type: String },
     resume: { type: String }, // URL for resume file
     coverLetter: { type: String },
-    academicDetails: {
-        grade: { type: Number },
-        achievements: [String],
-        transcripts: { type: String }, // URL for transcripts
-    },
+    grade: { type: Number },
+    achievements: [String],
+    transcripts: { type: String }, // URL for transcripts
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }], // List of applications
 });
 

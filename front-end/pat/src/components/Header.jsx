@@ -27,7 +27,7 @@ function Header() {
 
   return (
     <div>
-    <div className="flex justify-between items-center w-full h-16 bg-blue-500 p-4 text-white">
+    <div className="fixed top-0 left-0 flex justify-between items-center w-full h-16 bg-blue-500 p-4 text-white">
       {/* Left section: You can add logo or other items here */}
       <div>
         <button onClick={toggleSidebar}

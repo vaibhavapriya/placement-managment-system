@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import { PatProvider } from './context/PatContext';
+import { PatProvider } from './context/PatContext' ;
 import './App.css'
 
 import ForgotPassword from './pages/ForgotPassword';
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-    < PatProvider>
+    <PatProvider>
       <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
