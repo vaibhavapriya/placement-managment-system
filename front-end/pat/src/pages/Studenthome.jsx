@@ -47,6 +47,11 @@ function Studenthome() {
   return (
     <div className=" min-h-screen">
         <Header/>
+        <section>
+          <button>JOBS</button>
+          <button>APPLIED JOBS</button>
+          <button>MESSAGES</button>
+        </section>
         <section className="p-6">
           <h2 className="text-lg font-semibold">Drives</h2>
             <ul>

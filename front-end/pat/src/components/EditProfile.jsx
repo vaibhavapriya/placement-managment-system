@@ -22,6 +22,12 @@ function EditProfile({ closeModal }) {
         alert('You must be logged in to post a job.');
         return;
     }
+    // Dispatch action to add application
+        // dispatch({
+        //     type: 'ADD_APPLICATION',
+        //     payload: { application: newApplication },
+        // });
+        
 
     // Fetch existing profile details
     useEffect(() => {
@@ -72,6 +78,10 @@ function EditProfile({ closeModal }) {
                     Authorization: `Bearer ${token}`,
                 },
             }); // Update profile
+            dispatch({
+                type: 'SET_DETAILS',
+                payload: { profile },
+            });
             alert('Profile updated successfully');
         } catch (error) {
             console.error('Error updating profile:', error);

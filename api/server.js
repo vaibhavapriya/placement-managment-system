@@ -29,7 +29,7 @@ app.use(cors()); // Use CORS middleware
 app.use(express.json());
 
 // Routes
-app.use('/a', appRoutes);
+app.use('/app', appRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/auth', authRoutes);
 app.use('/student',stuRoutes);

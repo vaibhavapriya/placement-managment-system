@@ -5,6 +5,6 @@ const { validateToken } = require('../middlewares/validateToken');
 const { applyForJob } = require('../controllers/applicationController');
 
 // Apply for a job
-router.post('/apply', validateToken, applyForJob);
+router.post('/:id', validateToken, applyForJob);
 
 module.exports = router;
