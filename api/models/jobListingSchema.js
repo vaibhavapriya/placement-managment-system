@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 const jobListingSchema = new mongoose.Schema({
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    companyName: String,
+    companyEmail: String,
     title: String,
     description: String,
-    package:Number,
+    package: Number,
     location:String,
     requirements: [String],
+    status: { type: String, enum: ['Open', 'Close'], default: 'Open' },  
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }],
-});
+},{ timestamps: true });
 module.exports = mongoose.model('JobListing', jobListingSchema);

@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '../components/Dashboard'
+import Header from '../components/Header';
 
 function Adminhome() {
   return (
     <div>
-        <Dashboard/>
+        <Header/>
         <div></div>
     </div>
   )

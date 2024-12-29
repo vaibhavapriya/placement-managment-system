@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import { AuthProvider } from './context/AuthContext';
+import { PatProvider } from './context/PatContext';
 import './App.css'
 
 import ForgotPassword from './pages/ForgotPassword';
@@ -15,19 +15,19 @@ function App() {
 
   return (
     <>
-    < AuthProvider>
+    < PatProvider>
       <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/reset-password/:token" element={<ResetPassword />} />
-                <Route path="/student" element={<Studenthome />} />
-                <Route path="/company" element={<Companyhome />} />
-                <Route path="/admin" element={<Adminhome />} />
+                <Route path="/student/:id" element={<Studenthome />} />
+                <Route path="/company/:id" element={<Companyhome />} />
+                <Route path="/admin/:id" element={<Adminhome />} />
             </Routes>
       </Router>
-    </AuthProvider>
+    </PatProvider>
     </>
   )
 }

@@ -1,14 +1,14 @@
 // Controllers/applicationController.js
 const Application = require('../models/applicationSchema');
 
-// Create a new application
+// Apply for a job
 exports.createApplication = async (req, res) => {
     try {
         const { jobId, resume, coverLetter } = req.body;
         const newApplication = new Application({
             student: req.user._id, // Assuming middleware sets `req.user`
             job: jobId,
-            status: 'Submitted',
+            status: 'Applied',
             resume,
             coverLetter,
         });
@@ -28,3 +28,5 @@ exports.getStudentApplications = async (req, res) => {
         res.status(500).json({ error: 'Server error while fetching applications' });
     }
 };
+
+exports.getStudentProfile = async ( req, res) =>{};

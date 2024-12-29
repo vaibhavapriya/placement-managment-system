@@ -1,122 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { usePatContext } from '../context/PatContext';
+import FormDrive from "../components/FormDrive";
+import Header from '../components/Header';
 
-import Dashboard from '../components/Dashboard'
-import AllJobs from '../components/AllJobs'
 
 function Companyhome() {
-  const [jobData, setJobData] = useState({
-    title: "",
-    company: "",
-    location: "",
-    salary: "",
-    description: "",
-  });
+  //get company details using id(Context) and store in contest @
+  //add jobs @
+  //get jobs of the company
+  //get applicants
+  //edit job details
+  //edit application status
+  const { state, dispatch } = usePatContext();
+  const [loading, setLoading] = useState(true);
+  const [jobUpdated, setJobUpdated] = useState(false);
+  const [jobs, setJobs] = useState([]);
+  const user = state.id;
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
 
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+        if (!token) {
+            alert('You must be logged in to post a job.');
+            return;
+        }
+        console.log(state.id + user + `http://localhost:5000/jobs/c/${user}`);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setJobData({ ...jobData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("/jobs", jobData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Token for authentication
-        },
+    const fetchJobs = async () => {
+      try {
+        // Replace this URL with the actual API endpoint
+        const response = await axios.get(`http://localhost:5000/jobs/c/${user}`,{
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
       });
-      setSuccessMessage("Job added successfully!");
-      setErrorMessage("");
-      setJobData({
-        title: "",
-        company: "",
-        location: "",
-        salary: "",
-        description: "",
-      });
-    } catch (error) {
-      setSuccessMessage("");
-      setErrorMessage(
-        error.response?.data?.message || "An error occurred while adding the job."
-      );
-    }
-  };
+
+        if (response.data.jobs) {
+          setJobs(response.data.jobs);
+        }
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetch is complete
+      }
+    };
+
+    fetchJobs();
+  }, [jobUpdated]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Open the modal
+    const openModal = (job = null) => {
+        //setSelectedJob(job);
+        setIsModalOpen(true);
+    };
+
+    // Close the modal
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
   return (
     <div>
-        <Dashboard/>
+        <Header/>
+
+        {isModalOpen && <FormDrive closeModal={closeModal} />}
+
         <div>
-        <div className="add-job-container">
-      <h2>Add New Job</h2>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Job Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={jobData.title}
-            onChange={handleChange}
-            required
-          />
+          <button onClick={openModal}>+ Add drive</button>
         </div>
-        <div className="form-group">
-          <label htmlFor="company">Company Name</label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={jobData.company}
-            onChange={handleChange}
-            required
-          />
+
+        <div>
+        {loading ? (
+        <div>Loading jobs...</div>
+      ) : (
+        <div>
+          <h2>Jobs posted by your company:</h2>
+          {jobs.length > 0 ? (
+            <ul>
+              {jobs.map((job) => (
+                <li key={job._id}>
+                  <h3>{job.title}</h3>
+                  <p>{job.description}</p>
+                  <p>Status: {job.status}</p>
+                  <button onClick={() => openModal(job)}>Edit</button>
+                  {/* You can add more details here as needed */}
+                  {/* add button to edit <button onClick={() => openModal(job)}>Edit</button> */}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No jobs found for your company.</p>
+          )}
         </div>
-        <div className="form-group">
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={jobData.location}
-            onChange={handleChange}
-            required
-          />
+      )}
         </div>
-        <div className="form-group">
-          <label htmlFor="salary">Salary</label>
-          <input
-            type="number"
-            id="salary"
-            name="salary"
-            value={jobData.salary}
-            onChange={handleChange}
-            placeholder="Optional"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Job Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={jobData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="submit-button">
-          Add Job
-        </button>
-      </form>
-    </div>
-        </div>
-        <button>add drive</button>
-        <AllJobs/>
     </div>
   )
 }

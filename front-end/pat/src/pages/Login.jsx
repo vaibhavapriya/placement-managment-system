@@ -1,28 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
+import { usePatContext } from '../context/PatContext';
 
 const Login = () => {
-    const { user, setUser } = useAuthContext();
-    const [error,setError]=useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    // const { setUser } = useContext(useAuthContext);
+    const { state, dispatch } = usePatContext();
+    const [ error, setError ]=useState('');
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("Current State:", state);
+    }, [state]);
 
     const handleLogin = async () => {
         setError('');
         try {
             const res = await axios.post('http://localhost:5000/auth/login', { email, password });
-            const { token, role, userDetails } = res.data;
+            const { token, role, id } = res.data;
             localStorage.setItem('token', token);
-            setUser({ role, userDetails });
-
+            dispatch({
+                type: 'SET_USER',
+                payload: { id },
+            });
             // Navigate based on role
-            if (role === 'Student') navigate('/student');
-            if (role === 'Company') navigate('/company');
-            if (role === 'Admin') navigate('/admin');
+            if (role === 'Student') navigate(`/student/${id}`);
+            if (role === 'Company') navigate(`/company/${id}`);
+            if (role === 'Admin') navigate(`/admin${id}`);
         } catch (err) {
             //setError(err.response.data.message || 'Something went wrong');
             console.error(err.response.data.message);
@@ -41,6 +46,16 @@ const Login = () => {
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
             {error && <div className="bg-red-200 text-red-800 p-2 mb-4 rounded">{error}</div>}
             <button onClick={handleLogin}>Login</button>
+            <div className="mt-4 text-center">
+                <p>
+                    new user?{' '}
+                    <a href="/signup" className="text-blue-500">signup</a>
+                </p>
+                <p>
+                    forgot password?{' '}
+                    <a href="/forgotpassword" className="text-blue-500">forgotpassword</a>
+                </p>
+            </div>
         </div>
     );
 };

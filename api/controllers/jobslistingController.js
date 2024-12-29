@@ -1,20 +1,87 @@
 const JobListing = require('../models/jobListingSchema');  // Job listing model
 const User = require('../models/userSchema');  // User model
+const Company = require('../models/companySchema'); 
 
-// Create a job listing
 exports.createJob = async (req, res) => {
     try {
-        const { title, description, location } = req.body;
+        const { title, description, package: jobPackage, location, requirements } = req.body;
+        console.log('Request body:', req.body);
+        console.log('User info from token:', req.user.id);
+
+        // Find the company associated with the logged-in user
+        const company = await Company.findOne({ userid: req.user.id });
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found.' });
+        }
+
+        // Create the job listing
         const newJob = new JobListing({
+            company: company,
+            companyName: company.name,
+            companyEmail: company.email,
             title,
             description,
+            package: jobPackage,
             location,
-            companyId: req.user.companyId, // Company created by the logged-in user
-            createdBy: req.user._id, // User who is logged in and creating the job
+            requirements,
+            status: 'Open',
         });
 
-        await newJob.save();
-        res.status(201).json(newJob);
+        const savedJob = await newJob.save();
+
+        // Add the job ID to the company's jobListings array
+        company.jobListings.push(savedJob._id);
+        await company.save();
+
+        res.status(201).json({ message: 'Job created successfully.', job: savedJob });
+    } catch (error) {
+        console.error('Error creating job:', error);
+        res.status(500).json({ message: 'Server error.' });
+    }
+};
+
+exports.getCompanyJobs = async (req, res) => {
+    try {
+        const companyId = req.params.cuserid; // This is the User ID of the company
+
+        // Fetch company details using User ID
+        const company = await Company.findOne({ userid: companyId }).select('name email');
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found.' });
+        }
+        
+        // Fetch jobs associated with the company
+        const jobs = await JobListing.find({ company: companyId });
+        if (!jobs.length) {
+            return res.status(200).json({
+              message: 'No jobs found for this company.',
+              companyDetails: { name: company.name, email: company.email },
+              jobs: [],
+            });
+          }
+
+        res.status(200).json({
+            companyDetails: {
+                name: company.name,
+                email: company.email,
+            },
+            jobs,
+        });
+
+    } catch (error) {
+        console.error('Error fetching company jobs:', error);
+        res.status(500).json({ message: 'Server error.' });
+    }
+};
+
+// Get all job listing
+exports.getAllJobs = async (req, res) => {
+    try {
+         // Fetch job listings.
+         const jobs = await JobListing.find().sort({ createdAt: -1 });
+        
+         // Send back a successful response with the job listings
+         res.status(200).json({ jobs });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
@@ -57,19 +124,6 @@ exports.deleteJob = async (req, res) => {
         // Delete the job listing if authorized
         await job.remove();
         res.status(200).json({ message: 'Job listing deleted' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
-// Get all job listing
-exports.getAll = async (req, res) => {
-    try {
-         // Fetch job listings. You may want to consider filtering for students or adding pagination
-         const jobs = await JobListing.find();
-        
-         // Send back a successful response with the job listings
-         res.status(200).json({ jobs });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

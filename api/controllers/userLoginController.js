@@ -21,19 +21,10 @@ exports.login = async (req, res) => {
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
-
-        // Fetch additional role-specific data
-        let userDetails;
-        if (user.role === 'Student') {
-            userDetails = await Student.findOne({ user: user._id });
-        } else if (user.role === 'Company') {
-            userDetails = await Company.findOne({ user: user._id });
-        } else if (user.role === 'Admin') {
-            userDetails = await Admin.findOne({ user: user._id });
-        }
-
-        res.status(200).json({ token, role: user.role, userDetails });
+        const userId=user._id;
+        res.status(200).json({ token, role: user.role, id: userId });
     } catch (error) {
+        console.error("Server Error: ", error.message);
         res.status(500).json({ error: error.message });
     }
 };
@@ -52,15 +43,15 @@ exports.signup = async (req, res) => {
       // Role-Specific Data Creation
       if (role === 'Student') {
         await Student.create({
-            user: newUser._id,
+            userid: newUser._id,
         });
     } else if (role === 'Company') {
         await Company.create({
-            user: newUser._id,
+            userid: newUser._id,
         });
     } else if (role === 'Admin') {
         await Admin.create({
-            user: newUser._id,
+            userid: newUser._id,
         });
     } else {
         return res.status(400).json({ message: 'Invalid role specified.' });
@@ -71,6 +62,7 @@ exports.signup = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
   exports.logout = async (req, res) => {
     const token = req.header('Authorization')?.split(' ')[1];
     if (!token) {

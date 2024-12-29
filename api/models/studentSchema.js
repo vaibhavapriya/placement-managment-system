@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to User schema
+    userid: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to User schema
+    name: { type: String },
+    email: { type: String },
     resume: { type: String }, // URL for resume file
     coverLetter: { type: String },
     academicDetails: {
