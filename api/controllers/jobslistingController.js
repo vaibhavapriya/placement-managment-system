@@ -16,7 +16,7 @@ exports.createJob = async (req, res) => {
 
         // Create the job listing
         const newJob = new JobListing({
-            company: company,
+            company: company.userid,
             companyName: company.name,
             companyEmail: company.email,
             title,
