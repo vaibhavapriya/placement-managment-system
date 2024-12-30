@@ -14,11 +14,11 @@ exports.createJob = async (req, res) => {
             return res.status(404).json({ message: 'Company not found.' });
         }
 
-        // Create the job listing
+        // Create the job listing with the company info
         const newJob = new JobListing({
             company: company.userid,
-            companyName: company.name,
-            companyEmail: company.email,
+            companyName: company.name, // Set company name here
+            companyEmail: company.email, // Set company email here
             title,
             description,
             package: jobPackage,
@@ -39,6 +39,7 @@ exports.createJob = async (req, res) => {
         res.status(500).json({ message: 'Server error.' });
     }
 };
+
 exports.getCompanyJobs = async (req, res) => {
     try {
         const companyId = req.params.cuserid; // This is the User ID of the company

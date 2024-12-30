@@ -46,7 +46,8 @@ function AppliedJobs() {
       {applications.map((application) => (
         <div key={application._id} className="bg-white rounded-lg shadow-md p-4">
           <h3 className="text-xl font-bold text-blue-600">{application.job.title}</h3>
-          <p className="text-sm text-gray-500">{application.job.company}</p>
+          <p className="text-sm text-gray-500">{application.job.companyName}</p>
+          <p className="text-sm text-gray-500">{application.job.companyEmail}</p>
           <p className="mt-2 text-gray-700">{application.job.description}</p>
           <div className="mt-4">
             <span

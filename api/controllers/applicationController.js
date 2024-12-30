@@ -88,7 +88,7 @@ exports.getApplicationByJob = async (req, res) => {
     if (!application) {
       return res.status(404).json({ error: 'Application not found for the given jobId' });
     }
-    console.log(applications)
+    console.log(application)
     // Return the application details along with the populated student information
     res.status(200).json({ application });
   } catch (error) {
@@ -98,7 +98,7 @@ exports.getApplicationByJob = async (req, res) => {
 };
 
 exports.getApplicationsByStudent = async (req, res) => {
-  const { userId } = req.user.id;  // Get userId from route parameters
+  const userId = req.user.id;  // Get userId from route parameters
   
   try {
     // Fetch all applications by student userId
@@ -109,7 +109,7 @@ exports.getApplicationsByStudent = async (req, res) => {
       })
       .populate({
         path: 'job', // Populate job reference (if you want job details as well)
-        select: 'title company description location', // Select only relevant fields from job
+        select: 'title companyName companyEmail description location', // Select only relevant fields from job
       });
     
     if (!applications || applications.length === 0) {

@@ -44,10 +44,14 @@ exports.signup = async (req, res) => {
       if (role === 'Student') {
         await Student.create({
             userid: newUser._id,
+            name:newUser.name,
+            email:newUser.email,
         });
     } else if (role === 'Company') {
         await Company.create({
             userid: newUser._id,
+            name:newUser.name,
+            email:newUser.email,
         });
     } else if (role === 'Admin') {
         await Admin.create({
