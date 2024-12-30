@@ -88,7 +88,7 @@ exports.getApplicationByJob = async (req, res) => {
     if (!application) {
       return res.status(404).json({ error: 'Application not found for the given jobId' });
     }
-
+    console.log(applications)
     // Return the application details along with the populated student information
     res.status(200).json({ application });
   } catch (error) {
@@ -98,7 +98,7 @@ exports.getApplicationByJob = async (req, res) => {
 };
 
 exports.getApplicationsByStudent = async (req, res) => {
-  const { userId } = req.params;  // Get userId from route parameters
+  const { userId } = req.user.id;  // Get userId from route parameters
   
   try {
     // Fetch all applications by student userId
@@ -115,7 +115,7 @@ exports.getApplicationsByStudent = async (req, res) => {
     if (!applications || applications.length === 0) {
       return res.status(404).json({ error: 'No applications found for the given student' });
     }
-
+    console.log(applications)
     // Return the list of applications along with student and job details
     res.status(200).json({ applications });
   } catch (error) {

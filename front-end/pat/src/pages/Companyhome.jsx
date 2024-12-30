@@ -65,7 +65,11 @@ function Companyhome() {
   return (
     <div  className="w-screen min-h-screen">
         <Header/>
-
+        <div>space</div>
+        <div>space</div>
+        <div>space</div>
+        <div>space</div>
+        <div className="justify-center items-center">
         {isModalOpen && <FormDrive closeModal={closeModal} />}
 
         <div>
@@ -75,7 +79,7 @@ function Companyhome() {
         <div>
         {loading ? (
         <div>Loading jobs...</div>
-      ) : (
+        ) : (
         <div>
           <h2>Jobs posted by your company:</h2>
           {jobs.length > 0 ? (
@@ -95,7 +99,8 @@ function Companyhome() {
             <p>No jobs found for your company.</p>
           )}
         </div>
-      )}
+        )}
+        </div>
         </div>
     </div>
   )

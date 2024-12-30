@@ -8,7 +8,7 @@ const { getApplicationByJob, getApplicationsByStudent } = require('../controller
 // Apply for a job
 router.post('/:id', validateToken, upload.single('resume'), applicationController.applyForJob);
 router.get('/byJob/:jobId', validateToken, getApplicationByJob );
-router.get('/byUser/:jobId', validateToken, getApplicationsByStudent );
+router.get('/byUser/:userId', validateToken, getApplicationsByStudent );
 
 
 module.exports = router;
