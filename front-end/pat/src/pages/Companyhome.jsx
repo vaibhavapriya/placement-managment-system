@@ -3,9 +3,11 @@ import axios from "axios";
 import { usePatContext } from '../context/PatContext';
 import FormDrive from "../components/FormDrive";
 import Header from '../components/Header';
+import Applications from "../components/Applications";
 
 function Companyhome() {
   const { state, dispatch } = usePatContext();
+  const [selectedApplication, setSelectedApplication] = useState(null);
   const [loading, setLoading] = useState(true);
   const [jobUpdated, setJobUpdated] = useState(false);
   const [jobs, setJobs] = useState([]);
@@ -86,7 +88,6 @@ function Companyhome() {
         <div>
           <button onClick={openModal}>+ Add drive</button>
         </div>
-
         <div>
           {loading ? (
             <div>Loading jobs...</div>
@@ -114,23 +115,10 @@ function Companyhome() {
             </div>
           )}
         </div>
+        <div>
+          <Applications applications={applications}/>
+        </div>
 
-        {applications.length > 0 && (
-          <div>
-            <h3>Applications for this job:</h3>
-            <ul>
-              {applications.map((application) => (
-                <li key={application._id}>
-                  <p>Student Name: {application.student.name}</p>
-                  <p>Email: {application.student.email}</p>
-                  <p>Grade: {application.student.grade}</p>
-                  <p>Status: {application.status}</p>
-                  <p>Note: {application.candidateNote}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </div>
   );

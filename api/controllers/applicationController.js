@@ -141,3 +141,31 @@ exports.getApplicationsByStudent = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching applications' });
   }
 };
+
+exports.updateApplication = async (req, res) => {
+  const { applicationId } = req.params;
+  const { status, feedback } = req.body;
+
+  try {
+    const application = await Application.findById(applicationId);
+
+    if (!application) {
+      return res.status(404).json({ error: "Application not found." });
+    }
+
+    // Update the status and feedback fields
+    application.status = status || application.status;
+    application.feedback = feedback || application.feedback;
+
+    await application.save();
+
+    res.status(200).json({
+      message: "Application updated successfully.",
+      application,
+    });
+  } catch (error) {
+    console.error("Error updating application:", error);
+    res.status(500).json({ error: "An error occurred while updating the application." });
+  }
+};
+
