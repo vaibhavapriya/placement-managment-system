@@ -5,14 +5,15 @@ const PatContext = createContext();
 
 const initialState = {
   id: null,
+  role:null,
   userdetails: {},
 };
 
 function patReducer(state, action) {
   switch (action.type) {
     case 'SET_USER':
-      const { id, details } = action.payload; // Now including `details` in the action
-      return { ...state, id:id, userdetails: details };
+      const { id, role, details } = action.payload; // Now including `details` in the action
+      return { ...state, id:id, role:role, userdetails: details };
     case 'SET_DETAILS': {
       const { details } = action.payload;
       return { ...state, userdetails: details };

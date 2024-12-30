@@ -22,7 +22,7 @@ const Login = () => {
             localStorage.setItem('token', token);
             dispatch({
                 type: 'SET_USER',
-                payload: { id },
+                payload: { id , role },
             });
             // Navigate based on role
             if (role === 'Student') navigate(`/student/${id}`);
