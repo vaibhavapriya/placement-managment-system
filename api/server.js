@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const connectDB = require('./config/db');
 //const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 // Connect to MongoDB
 connectDB();
 
+app.options('*', cors());
 // Middleware
 app.use(cors()); // Use CORS middleware
  app.use(cors({
@@ -27,6 +29,8 @@ app.use(cors()); // Use CORS middleware
  }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Routes
 app.use('/app', appRoutes);
@@ -36,6 +40,8 @@ app.use('/student',stuRoutes);
 
 // Error Handling Middleware
 //app.use(errorHandler);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
