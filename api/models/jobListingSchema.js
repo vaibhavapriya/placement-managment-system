@@ -7,6 +7,7 @@ const jobListingSchema = new mongoose.Schema({
     description: String,
     package: Number,
     location:String,
+    type: { type: String, enum: ['Fulltime', 'Internship'], default: 'Fulltime' }, 
     requirements: [String],
     status: { type: String, enum: ['Open', 'Close'], default: 'Open' },  
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }],

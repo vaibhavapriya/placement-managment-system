@@ -38,7 +38,6 @@ exports.editProfile = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
-  
 // Apply for a job
 exports.createApplication = async (req, res) => {
     try {
@@ -56,7 +55,6 @@ exports.createApplication = async (req, res) => {
         res.status(500).json({ error: 'Server error while creating application' });
     }
 };
-
 // Get applications for a student
 exports.getStudentApplications = async (req, res) => {
     try {

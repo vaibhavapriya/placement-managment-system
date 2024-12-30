@@ -4,7 +4,7 @@ const Company = require('../models/companySchema');
 
 exports.createJob = async (req, res) => {
     try {
-        const { title, description, package: jobPackage, location, requirements } = req.body;
+        const { title, description, package: jobPackage, location, requirements, type} = req.body;
         console.log('Request body:', req.body);
         console.log('User info from token:', req.user.id);
 
@@ -24,6 +24,7 @@ exports.createJob = async (req, res) => {
             package: jobPackage,
             location,
             requirements,
+            type,
             status: 'Open',
         });
 
@@ -88,7 +89,7 @@ exports.getAllJobs = async (req, res) => {
 
 exports.editJob = async (req, res) => {
     try {
-        const { title, description, package: jobPackage, location, requirements, status} = req.body;
+        const { title, description, package: jobPackage, location, requirements, status, type} = req.body;
         
         const jid=req.params.jobId;
         console.log(jid);
@@ -116,6 +117,7 @@ exports.editJob = async (req, res) => {
         job.package = jobPackage || job.package;
         job.requirements = requirements && Array.isArray(requirements) ? requirements : job.requirements; // Ensure requirements is an array
         job.status = status || job.status;
+        job.type = type || job.type;
         job.updatedAt = Date.now();
 
         // Save the updated job

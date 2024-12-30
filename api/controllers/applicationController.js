@@ -127,7 +127,7 @@ exports.getApplicationsByStudent = async (req, res) => {
       })
       .populate({
         path: 'job', // Populate job reference (if you want job details as well)
-        select: 'title companyName companyEmail description location', // Select only relevant fields from job
+        select: 'title companyName companyEmail description location type', // Select only relevant fields from job
       });
     
     if (!applications || applications.length === 0) {

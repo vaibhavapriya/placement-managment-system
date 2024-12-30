@@ -8,6 +8,7 @@ function FormDrive({ closeModal, job }) {
         package: 0,
         location: '',
         requirements: '', // Can be a comma-separated string or array
+        type:''
     });
 
     useEffect(() => {
@@ -19,6 +20,7 @@ function FormDrive({ closeModal, job }) {
                 status: job.status || '',
                 package: job.package || '',
                 requirements: job.requirements ? job.requirements.join(', ') : '', // Ensure it's a comma-separated string if it's an array
+                type:job.type||'',
             });
         }
     }, [job]);
@@ -48,6 +50,7 @@ function FormDrive({ closeModal, job }) {
             location: jobDetails.location,
             requirements: jobDetails.requirements.split(',').map((req) => req.trim()), // Convert comma-separated string to array
             status: jobDetails.status,
+            type:jobDetails.type,
         };
         try {
             let response;
@@ -140,6 +143,20 @@ function FormDrive({ closeModal, job }) {
                             required
                             className="p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="type" className="font-semibold text-lg">Type</label>
+                        <select
+                            id="type"
+                            name="type"
+                            value={jobDetails.type}
+                            onChange={handleChange}
+                            required
+                            className="p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value='Fulltime'>Fulltime</option>
+                            <option value='Internship'>Internship</option>
+                        </select>
                     </div>
                     <div className="flex flex-col">
                         {/* Conditionally render the "Status" field if the job exists */}
