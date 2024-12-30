@@ -71,29 +71,47 @@ exports.applyForJob = async (req, res) => {
 };
 
 exports.getApplicationByJob = async (req, res) => {
-  const { jobId } = req.params;  // Get jobId from route parameters
-  
+  const { jobId } = req.params; // Extract the jobId from route parameters
+  console.log("jobId:", jobId);
+
   try {
-    // Fetch the application by jobId
-    const application = await Application.findOne({ job: jobId })
+    // Find applications for the given jobId
+    const applications = await Application.find({ job: jobId })
       .populate({
-        path: 'student', // Populate student reference in the application
-        select: 'name email grade achievements', // Select only relevant fields from student
-      })
-      .populate({
-        path: 'job', // Populate job reference (if you want job details as well)
-        select: 'title company description location', // Select only relevant fields from job
+        path: 'job', // Populate job reference from JobListing model
+        select: 'title company description location', // Select relevant fields from job
       });
-    
-    if (!application) {
-      return res.status(404).json({ error: 'Application not found for the given jobId' });
+
+    if (!applications || applications.length === 0) {
+      return res.status(404).json({ error: 'No applications found for this job.' });
     }
-    console.log(application)
-    // Return the application details along with the populated student information
-    res.status(200).json({ application });
+
+    // Extract student IDs from applications
+    const studentIds = applications.map(app => app.student);
+
+    // Fetch student details for these userIds
+    const students = await Student.find({ userid: { $in: studentIds } });
+
+    // Combine applications with student details
+    const populatedApplications = applications.map(app => {
+      const student = students.find(s => s.userid.toString() === app.student.toString());
+      return {
+        ...app.toObject(),
+        student: student
+          ? {
+              name: student.name,
+              email: student.email,
+              grade: student.grade,
+              achievements: student.achievements,
+            }
+          : null, // Add null if no matching student is found
+      };
+    });
+
+    res.status(200).json({ applications: populatedApplications });
   } catch (error) {
-    console.error('Error fetching application details:', error);
-    res.status(500).json({ error: 'An error occurred while fetching application details' });
+    console.error('Error fetching applications for job:', error);
+    res.status(500).json({ error: 'An error occurred while fetching applications for the job.' });
   }
 };
 

@@ -20,7 +20,7 @@ function AppliedJobs() {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/app//byUser/${studentId}`, {
+        const response = await axios.get(`http://localhost:5000/app/byUser/${studentId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
