@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate, useParams  } from 'react-router-dom';
 const JobDetails = () => {
+    const navigate = useNavigate();
     const { jobId } = useParams(); // Get the jobId from the URL
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -37,8 +36,9 @@ const JobDetails = () => {
     }
 
     return (
-        <div className="p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg mt-6">
-            <h1 className="text-2xl font-semibold text-gray-800 mb-4"><Link to={`/job/${job._id}`}>{job.title}</Link></h1>
+        <div className="p-6 max-w-4xl min-h-screen mx-auto bg-white shadow-lg rounded-lg mt-6">
+            <button onClick={() => navigate(-1)} className="mt-4 text-blue-500">Go Back</button>
+            <h1 className="text-2xl font-semibold text-gray-800 mb-4">{job.title}</h1>
             <p className="text-gray-700 mb-4">
                 <strong>Company:</strong> {job.companyName}
             </p>
