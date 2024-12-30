@@ -47,82 +47,96 @@ const Signup = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
+    <div className="w-screen min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3D52A0] to-[#7091E6]">
+      <div className="max-w-lg mx-auto mt-8 p-8 bg-white shadow-lg rounded-lg">
+        <h2 className="text-2xl font-bold mb-6 text-center text-[#3D52A0]">Create an Account</h2>
 
-            {error && <div className="bg-red-200 text-red-800 p-2 mb-4 rounded">{error}</div>}
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-200 text-red-800 p-2 mb-4 rounded">
+            {error}
+          </div>
+        )}
 
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="name" className="block text-sm font-medium">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full mt-1 px-3 py-2 border rounded"
-                        required
-                    />
-                </div>
+        {/* Signup Form */}
+        <form onSubmit={handleSubmit} className='min-w'>
+          {/* Name Input */}
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+              required
+            />
+          </div>
 
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full mt-1 px-3 py-2 border rounded"
-                        required
-                    />
-                </div>
+          {/* Email Input */}
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+              required
+            />
+          </div>
 
-                <div className="mb-4">
-                    <label htmlFor="password" className="block text-sm font-medium">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="w-full mt-1 px-3 py-2 border rounded"
-                        required
-                    />
-                </div>
+          {/* Password Input */}
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm font-medium">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+              required
+            />
+          </div>
 
-                <div className="mb-4">
-                    <label htmlFor="role" className="block text-sm font-medium">Role</label>
-                    <select
-                        id="role"
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        className="w-full mt-1 px-3 py-2 border rounded"
-                    >
-                        <option value="Student">Student</option>
-                        <option value="Company">Company</option>
-                        <option value="Admin">Admin</option>
-                    </select>
-                </div>
+          {/* Role Selector */}
+          <div className="mb-4">
+            <label htmlFor="role" className="block text-sm font-medium">Role</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+            >
+              <option value="Student">Student</option>
+              <option value="Company">Company</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
 
-                <button
-                    type="submit"
-                    className="w-full py-2 bg-blue-500 text-white rounded mt-4"
-                    disabled={loading}
-                >
-                    {loading ? 'Signing up...' : 'Sign Up'}
-                </button>
-            </form>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-2 bg-[#3D52A0] text-white rounded mt-4 hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6]"
+            disabled={loading}
+          >
+            {loading ? 'Signing up...' : 'Sign Up'}
+          </button>
+        </form>
 
-            <div className="mt-4 text-center">
-                <p>
-                    Already have an account?{' '}
-                    <a href="/login" className="text-blue-500">Login</a>
-                </p>
-            </div>
+        {/* Already have an account? */}
+        <div className="mt-4 text-center">
+          <p className="text-gray-700">
+            Already have an account?{' '}
+            <a href="/login" className="text-[#7091E6] hover:text-[#3D52A0]">Login</a>
+          </p>
         </div>
+      </div>
+    </div>
     );
 };
 

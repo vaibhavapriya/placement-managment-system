@@ -25,14 +25,18 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Reset Password</h2>
+    <div className="w-screen min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3D52A0] to-[#7091E6]">
+    <div className="max-w-lg mx-auto mt-8 p-8 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-bold mb-6 text-center text-[#3D52A0]">Reset Password</h2>
+
+      {/* Reset Password Form */}
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">New Password</label>
+        {/* New Password Input */}
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium">New Password</label>
           <input
             type="password"
-            className="form-control"
+            className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
             id="password"
             placeholder="Enter new password"
             value={password}
@@ -40,11 +44,13 @@ const ResetPassword = () => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+
+        {/* Confirm Password Input */}
+        <div className="mb-4">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium">Confirm Password</label>
           <input
             type="password"
-            className="form-control"
+            className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
             id="confirmPassword"
             placeholder="Confirm new password"
             value={confirmPassword}
@@ -52,10 +58,20 @@ const ResetPassword = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Reset Password</button>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full py-2 bg-[#3D52A0] text-white rounded mt-4 hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6]"
+        >
+          Reset Password
+        </button>
       </form>
-      {message && <p className="mt-3">{message}</p>}
+
+      {/* Message */}
+      {message && <p className="mt-3 text-center text-gray-700">{message}</p>}
     </div>
+  </div>
   );
 };
 
