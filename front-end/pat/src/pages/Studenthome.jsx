@@ -40,7 +40,7 @@ function Studenthome() {
     switch (activeSection) {
       case 'jobs':
         return (
-          <section className="p-6  pt-24">
+          <section className=" p-6  pt-24">
             <h2 className="text-lg font-semibold p-6 ">Available Jobs</h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {jobs.map((job) => (
@@ -51,14 +51,14 @@ function Studenthome() {
         );
       case 'applied':
         return (
-          <section className="p-6 pt-24">
+          <section className=" p-6 pt-24">
             <h2 className="text-lg font-semibold">Applied Jobs</h2>
             <AppliedJobs />
           </section>
         );
       case 'messages':
         return (
-          <section className="p-6 pt-24">
+          <section className=" p-6 pt-24">
             <h2 className="text-lg font-semibold">Messages</h2>
             <p>No messages available.</p>
           </section>
@@ -69,7 +69,7 @@ function Studenthome() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen justify-center w-screen">
       <Header />
       <div className="fixed top-16 left-0 w-full bg-white shadow-md p-4 z-10">
         <div className="flex justify-around">

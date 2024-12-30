@@ -10,7 +10,7 @@ import Signup from './pages/Signup';
 import Studenthome from './pages/Studenthome';
 import Companyhome from './pages/Companyhome';
 import Adminhome from './pages/Adminhome';
-import JobDetails from './components/JobDetails';
+import JobDetails from './pages/JobDetails';
 
 function App() {
 
