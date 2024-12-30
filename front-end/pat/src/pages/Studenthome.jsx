@@ -41,10 +41,10 @@ function Studenthome() {
       case 'jobs':
         return (
           <section className="p-6  pt-24">
-            <h2 className="text-lg font-semibold">Available Jobs</h2>
-            <ul>
+            <h2 className="text-lg font-semibold p-6 ">Available Jobs</h2>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {jobs.map((job) => (
-                <DriveCard job={job} key={job._id} />
+                <DriveCard job={job} key={job._id}  className="flex justify-center"/>
               ))}
             </ul>
           </section>
