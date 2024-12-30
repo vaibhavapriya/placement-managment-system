@@ -27,31 +27,31 @@ function Header() {
 
   return (
     <div>
-    <div className="fixed top-0 left-0 flex justify-between items-center w-full h-16 bg-blue-500 p-4 text-white">
-      {/* Left section: You can add logo or other items here */}
+    <div className="fixed top-0 left-0 flex justify-between items-center w-full h-16 bg-[#5C6BC0] p-4 text-white shadow-md">
       <div>
-        <button onClick={toggleSidebar}
-             className="hover:bg-blue-800 p-2 rounded-lg transition duration-300"
+        <button
+          onClick={toggleSidebar}
+          className="hover:bg-[#4C5C8C] p-2 rounded-lg transition duration-300"
         >
           Profile
         </button>
       </div>
       <div className="text-xl font-bold">App Logo</div>
 
-      {/* Right section: Logout and Profile */}
+      {/* Right section: Logout */}
       <div className="flex space-x-4">
-                <button 
-                    onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 p-2 rounded-lg transition duration-300"
-                >
-                    LogOut
-                </button>
+        <button
+          onClick={handleLogout}
+          className="bg-[#FF7043] hover:bg-[#F4511E] p-2 rounded-lg transition duration-300"
+        >
+          LogOut
+        </button>
       </div>
-      
     </div>
-      {/* Profile Sidebar */}
-      {isSidebarOpen && (<Profile />)}
-    </div>
+
+    {/* Profile Sidebar */}
+    {isSidebarOpen && (<Profile />)}
+  </div>
   )  
 }
 
