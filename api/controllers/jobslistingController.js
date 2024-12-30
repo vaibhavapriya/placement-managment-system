@@ -129,6 +129,22 @@ exports.editJob = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+exports.getJobById = async (req, res) => {
+    try {
+        const jobId = req.params.jobId;
+        const job = await JobListing.findById(jobId);
+        console.log(job)
+
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+
+        res.json(job);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
 
 // Delete a job listing
 exports.deleteJob = async (req, res) => {

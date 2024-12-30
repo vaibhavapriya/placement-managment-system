@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Studenthome from './pages/Studenthome';
 import Companyhome from './pages/Companyhome';
 import Adminhome from './pages/Adminhome';
+import JobDetails from './components/JobDetails';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/student/:id" element={<Studenthome />} />
                 <Route path="/company/:id" element={<Companyhome />} />
                 <Route path="/admin/:id" element={<Adminhome />} />
+                <Route path="/job/:jobId" element={<JobDetails />} />
             </Routes>
       </Router>
     </PatProvider>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import FormApplication from './FormApplication';
+import { Link } from 'react-router-dom';
+
 function DriveCard({ job }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -18,7 +20,7 @@ function DriveCard({ job }) {
             {isModalOpen && <FormApplication job={job} closeModal={closeModal} />}
             <div className="flex flex-col space-y-2">
                 {/* Drive Title */}
-                <h2 className="text-xl font-semibold text-[#3D52A0]">{job.title}</h2>
+                <h2 className="text-xl font-semibold text-[#3D52A0]"><Link to={`/job/${job._id}`}>{job.title}</Link></h2>
 
                 {/* Package Information */}
                 <div className="text-lg text-[#8697C4]">
@@ -30,7 +32,7 @@ function DriveCard({ job }) {
                 <button className="text-[#7091E6] hover:underline focus:outline-none">delailed</button>
             </div>
 
-            <div classname="mt-4 text-sm text-[#6B6A85]">below this changes if student all drives apply button or applied,if applied drivesin students status as read,shotlisted,interview etc if c/a:edit drive open or close status view applicants button</div>
+            <div className="mt-4 text-sm text-[#6B6A85]">below this changes if student all drives apply button or applied,if applied drivesin students status as read,shotlisted,interview etc if c/a:edit drive open or close status view applicants button</div>
             {/* Apply Button */}
             <button onClick={handleApply}
                 className="mt-4 w-full py-2 px-4 text-white bg-[#3D52A0] hover:bg-[#2E4292] rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:ring-offset-2"
