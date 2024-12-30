@@ -40,7 +40,7 @@ app.use('/student',stuRoutes);
 
 // Error Handling Middleware
 //app.use(errorHandler);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+//app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Start server

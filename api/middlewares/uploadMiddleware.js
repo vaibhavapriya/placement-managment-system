@@ -10,16 +10,18 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Set up Cloudinary storage
+// Configure Multer Storage with Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'resumes', // Folder name in Cloudinary
-    format: async (req, file) => 'pdf', // Force files to be stored as PDF
-    public_id: (req, file) => Date.now() + '-' + file.originalname, // Unique file name
+    folder: 'resumes',  // Folder in Cloudinary
+    format: 'pdf',  // Explicitly set the format to PDF
+    resource_type: 'raw',
+    public_id: (req, file) => Date.now() + '-' + file.originalname.replace('.pdf', ''),  // Remove .pdf from the original file name to prevent duplication
   },
 });
 
+// Create Multer instance
 const upload = multer({ storage });
 
 module.exports = upload;
