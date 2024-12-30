@@ -6,6 +6,7 @@ function FormApplication({ job, closeModal }) {
   const [candidateNote, setCandidateNote] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const jobId = job._id;
   console.log('jobId being sent:', jobId);
 
@@ -16,6 +17,10 @@ function FormApplication({ job, closeModal }) {
       alert('Please fill in all fields!');
       return;
     }
+    if (isSubmitting) return; // Prevent duplicate submission
+
+    setIsSubmitting(true); 
+
     try {
       const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
       if (!token) {
@@ -42,7 +47,9 @@ function FormApplication({ job, closeModal }) {
       alert('Application submitted successfully!');
     } catch (error) {
       console.error('Error submitting application:', error);
-      setErrorMessage(error.response?.data?.error || 'Something went wrong. Please try again later.');
+      setErrorMessage(error.response?.data?.message || 'Something went wrong. Please try again later.');
+    }finally {
+      setIsSubmitting(false); // Re-enable the submit button
     }
   };
 
@@ -76,6 +83,10 @@ function FormApplication({ job, closeModal }) {
               className="mt-1 block w-full border rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
+           {/* Error Message */}
+           {errorMessage && (
+            <div className="text-red-500 mt-2">{errorMessage}</div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-end space-x-4">

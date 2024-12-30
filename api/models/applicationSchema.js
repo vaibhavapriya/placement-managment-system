@@ -8,4 +8,6 @@ const applicationSchema = new mongoose.Schema({
     appliedAt: {type: Date,default: Date.now, },
     feedback:{type: String }, // Feedback for students
 });
+applicationSchema.index({ student: 1, job: 1 }, { unique: true });
+
 module.exports = mongoose.model('Application', applicationSchema);

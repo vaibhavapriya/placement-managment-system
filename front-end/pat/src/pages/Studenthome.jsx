@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import Header from '../components/Header';
 import DriveCard from '../components/DriveCard';
+import AppliedJobs from '../components/AppliedJobs';
 
 function Studenthome() {
   //get student details using id(authContext) and store in contest @
@@ -62,6 +63,7 @@ function Studenthome() {
             </ul>
         </section>
         <div>Applied jobs map jobCard</div>
+        <AppliedJobs />
     </div>
   )
 }
