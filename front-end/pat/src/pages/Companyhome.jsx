@@ -7,13 +7,13 @@ import Applications from "../components/Applications";
 
 function Companyhome() {
   const { state, dispatch } = usePatContext();
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);  // Store selected job for editing
   const [loading, setLoading] = useState(true);
   const [jobUpdated, setJobUpdated] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const user = state.id;
-  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -36,7 +36,7 @@ function Companyhome() {
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -46,11 +46,13 @@ function Companyhome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (job = null) => {
+    setSelectedJob(job);  // Set the job to be edited
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedJob(null);  // Clear the selected job when closing modal
   };
 
   const fetchApplications = async (jobId) => {
@@ -84,7 +86,7 @@ function Companyhome() {
       <div>space</div>
       <div>space</div>
       <div className="justify-center items-center">
-        {isModalOpen && <FormDrive closeModal={closeModal} />}
+        {isModalOpen && <FormDrive closeModal={closeModal} job={selectedJob} />}  {/* Pass selectedJob to FormDrive */}
         <div>
           <button onClick={openModal}>+ Add drive</button>
         </div>
@@ -102,7 +104,6 @@ function Companyhome() {
                       <p>{job.description}</p>
                       <p>Status: {job.status}</p>
                       <button onClick={() => openModal(job)}>Edit</button>
-                      {/* Button to view all applications for the job */}
                       <button onClick={() => fetchApplications(job._id)}>
                         View Applications
                       </button>
@@ -116,9 +117,8 @@ function Companyhome() {
           )}
         </div>
         <div>
-          <Applications applications={applications}/>
+          <Applications applications={applications} />
         </div>
-
       </div>
     </div>
   );

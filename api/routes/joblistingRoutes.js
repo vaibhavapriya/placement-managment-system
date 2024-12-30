@@ -12,7 +12,7 @@ router.get('/c/:cuserid', validateToken, getCompanyJobs);
 router.get('/', getAllJobs);
 
 // Edit a job listing (only authorized users can do this)
-router.put('/edit/:jobId', isAuthorized, editJob);
+router.put('/edit/:jobId', validateToken, editJob);
 
 // Delete a job listing (only authorized users can do this)
 router.delete('/delete/:jobId', isAuthorized, deleteJob);

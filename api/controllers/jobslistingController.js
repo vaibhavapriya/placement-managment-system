@@ -86,24 +86,42 @@ exports.getAllJobs = async (req, res) => {
     }
 };
 
-// Edit a job listing
 exports.editJob = async (req, res) => {
     try {
-        const { title, description, location } = req.body;
+        const { title, description, package: jobPackage, location, requirements, status} = req.body;
+        
+        const jid=req.params.jobId;
+        console.log(jid);
+        // Find the job by ID
         const job = await JobListing.findById(req.params.jobId);
 
         if (!job) {
-            return res.status(404).json({ message: 'Job listing not found' });
+            return res.status(404).json({ message: 'Job not found.' });
         }
 
-        // Update the job listing if authorized
+        // Find the company associated with the logged-in user
+        const company = await Company.findOne({ userid: req.user.id });
+
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found.' });
+        }
+
+        // Update the job's details
+        job.company = company.userid;
+        job.companyName = company.name; // Set company name here
+        job.companyEmail = company.email; // Set company email here
         job.title = title || job.title;
         job.description = description || job.description;
         job.location = location || job.location;
+        job.package = jobPackage || job.package;
+        job.requirements = requirements && Array.isArray(requirements) ? requirements : job.requirements; // Ensure requirements is an array
+        job.status = status || job.status;
         job.updatedAt = Date.now();
 
+        // Save the updated job
         await job.save();
-        res.status(200).json(job);
+        
+        res.status(200).json(job); // Return the updated job details
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
