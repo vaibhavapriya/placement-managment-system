@@ -75,9 +75,10 @@ function Companyhome() {
   
       if (response.data.applications) {
         const shortlistedStudents = response.data.applications
-          .filter((app) => app.status === "Shortlisted")
-          .map((app) => app.student); // Array of shortlisted student IDs
+          .filter((app) => app.status === "Shortlisted");
+          //.map((app) => app.student); // Array of shortlisted student IDs
         setshortlistedApplications(shortlistedStudents);
+        console.log(response.data.applications);
         setSelectedJob(job);
         setIsInterviewModalOpen(true);
       }

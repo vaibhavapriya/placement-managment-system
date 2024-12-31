@@ -11,6 +11,6 @@ const jobListingSchema = new mongoose.Schema({
     requirements: [String],
     status: { type: String, enum: ['Open', 'Close'], default: 'Open' },  
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }],
-    interviewSlots: [{type: mongoose.Schema.Types.ObjectId, ref: "InterviewSlot" }],
+    interviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Interview" }],
 },{ timestamps: true });
 module.exports = mongoose.model('JobListing', jobListingSchema);

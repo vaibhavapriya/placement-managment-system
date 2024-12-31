@@ -10,6 +10,7 @@ const studentSchema = new mongoose.Schema({
     achievements: [String],
     transcripts: { type: String }, // URL for transcripts
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }], // List of applications
+    interviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interview' }] 
 });
 
 module.exports = mongoose.model('Student', studentSchema);

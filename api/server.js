@@ -3,11 +3,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const connectDB = require('./config/db');
-//const driveRoutes = require('./routes/joblistingRoutes');
 const authRoutes = require('./routes/loginRoutes')
 const jobRoutes = require('./routes/joblistingRoutes')
 const appRoutes = require('./routes/applicationRoutes')
 const stuRoutes = require('./routes/studentRoutes')
+const intRoutes = require('./routes/interviewRoutes')
 //const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -37,6 +37,7 @@ app.use('/app', appRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/auth', authRoutes);
 app.use('/student',stuRoutes);
+app.use('/interviews', intRoutes);
 
 // Error Handling Middleware
 //app.use(errorHandler);

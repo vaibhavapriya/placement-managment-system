@@ -99,6 +99,8 @@ exports.getApplicationByJob = async (req, res) => {
         ...app.toObject(),
         student: student
           ? {
+              id:student._id,
+              userid:student.userid,
               name: student.name,
               email: student.email,
               grade: student.grade,
