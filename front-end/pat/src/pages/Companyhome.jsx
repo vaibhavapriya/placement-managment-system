@@ -120,7 +120,7 @@ function Companyhome() {
   return (
 <div className="w-screen min-h-screen pt-16 bg-[#F7F9FF] text-[#3D52A0]">
   <Header />
-  <div className="flex flex-col items-center px-6">
+  <div className="flex flex-col items-center px-6 pt-10">
     {isModalOpen && <FormDrive closeModal={closeModal} job={selectedJob} />}
     {isInterviewModalOpen && <FormInterview closeModal={closeInterviewModal} jobId={selectedJob._id} students={shortlistedApplications}/>}
     {/* Add Drive Button */}
