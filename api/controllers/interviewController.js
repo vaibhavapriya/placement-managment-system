@@ -127,6 +127,34 @@ exports.scheduleInterview = async (req, res) => {
   }
 };
 
+exports.getInterviewsByStudentId = async (req, res) => {
+  try {
+    const { userId } = req.params;  // Assuming the userId is passed as a route parameter
+
+    // Find the student by userId
+    const student = await Student.findOne({ userid: userId });  // We use `userid` here to find the student document
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    // Find all interviews associated with the student using the student's _id
+    const interviews = await Interview.find({ student: student.userid})  
+      .populate('job', 'title companyName')  // Populate job details (title and companyName)
+      .populate('application')
+      .populate('student', 'name email')
+      .populate('slotBooked')  ;
+
+    if (interviews.length === 0) {
+      return res.status(404).json({ message: "No interviews found for this student." });
+    }
+
+    return res.status(200).json(interviews);
+  } catch (err) {
+    console.error("Error fetching interviews:", err);
+    return res.status(500).json({ message: "Server error." });
+  }
+};
 
 exports.getInterviewSchedule = async (req, res) => {
   try {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import DriveCard from '../components/DriveCard';
 import AppliedJobs from '../components/AppliedJobs';
+import StudentInterviews from '../components/StudentInterviews';
 
 function Studenthome() {
   // State for active section
@@ -60,7 +61,7 @@ function Studenthome() {
         return (
           <section className=" p-6 pt-24">
             <h2 className="text-lg font-semibold">Messages</h2>
-            <p>No messages available.</p>
+            <StudentInterviews />
           </section>
         );
       default:
