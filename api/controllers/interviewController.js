@@ -156,6 +156,97 @@ exports.getInterviewsByStudentId = async (req, res) => {
   }
 };
 
+exports.getInterviewsByCompanyId = async (req, res) => {
+  try {
+    const { companyId } = req.params;  // Extract the companyId from request parameters
+
+    // Step 1: Find all job listings for the given company
+    const jobListings = await JobListing.find({ company: companyId }); // Assuming the 'company' field links the job to a company
+
+    if (jobListings.length === 0) {
+      return res.status(404).json({ message: "No job listings found for this company." });
+    }
+
+    // Step 2: Get all interviews associated with these job listings
+    const jobIds = jobListings.map(job => job._id);  // Extract job IDs
+    const interviews = await Interview.find({ job: { $in: jobIds } }) // Find interviews for the given job IDs
+      .populate('job', 'title companyName')  // Populate job title and company name
+      .populate('student', 'name email')  // Populate student details (name, email)
+      .populate('application', 'status candidateNote')  // Populate application status and note
+      .populate('slotBooked');  // Populate booked slot if any
+
+    if (interviews.length === 0) {
+      return res.status(404).json({ message: "No interviews found for this company." });
+    }
+
+    // Step 3: Return the list of interviews
+    return res.status(200).json(interviews);
+  } catch (err) {
+    console.error("Error fetching interviews:", err);
+    return res.status(500).json({ message: "Server error." });
+  }
+};
+
+exports.getSlotsForInterview = async (req, res) => {
+  try {
+    const { interviewId } = req.params;  // Interview ID passed in the URL parameter
+    console.log('Interview ID:', interviewId);
+
+    // Step 1: Find the interview
+    const interview = await Interview.findById(interviewId);
+    if (!interview) {
+      return res.status(404).json({ message: "Interview not found." });
+    }
+
+    // Step 2: Fetch all slots associated with this interview
+    const slots = await Slot.find({ _id: { $in: interview.slots } }); // Find slots using the interview's slot IDs
+    if (slots.length === 0) {
+      return res.status(404).json({ message: "No slots available for this interview." });
+    }
+
+    // Step 3: Return the list of slots
+    return res.status(200).json(slots);
+  } catch (err) {
+    console.error("Error fetching slots:", err);
+    return res.status(500).json({ message: "Server error." });
+  }
+};
+
+// Booking the slot for the interview
+exports.bookSlotForInterview = async (req, res) => {
+  try {
+    //const { interviewId, slotId } = req.params;  // interviewId and slotId from the request params
+    const { interviewId, slotId } = req.body;
+
+    // Step 1: Find the interview
+    const interview = await Interview.findById(interviewId);
+    if (!interview) {
+      return res.status(404).json({ message: "Interview not found." });
+    }
+
+    // Step 2: Find the slot
+    const slot = await Slot.findById(slotId);
+    if (!slot || slot.status !== "open") {
+      return res.status(400).json({ message: "Slot is either invalid or already booked." });
+    }
+
+    // Step 3: Update the slot to 'booked' status
+    slot.status = "booked";
+    await slot.save();
+
+    // Step 4: Update the interview's 'slotBooked' field with the selected slot
+    interview.slotBooked = slotId;
+    interview.status = "Scheduled"; // Assuming you want to mark it as Scheduled when the slot is booked
+    await interview.save();
+
+    return res.status(200).json({ message: "Slot successfully booked." });
+
+  } catch (error) {
+    console.error("Error booking slot:", error);
+    return res.status(500).json({ message: "Server error." });
+  }
+};
+
 exports.getInterviewSchedule = async (req, res) => {
   try {
     const { studentId, jobId } = req.query;  // Assume studentId and jobId are passed as query params
