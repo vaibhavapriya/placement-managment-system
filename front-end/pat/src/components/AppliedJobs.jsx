@@ -43,26 +43,44 @@ function AppliedJobs() {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div className="w-full max-w-[1280px] mx-auto px-4 py-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {applications.map((application) => (
-        <div key={application._id} className="bg-white rounded-lg shadow-md p-4">
-          <div><Link to={`/app/${application._id}`}>{`/app/${application._id}`}</Link></div>
-          <h3 className="text-xl font-bold text-blue-600"><Link to={`/job/${application.job._id}`}>{application.job.title}</Link></h3>
-          <p className="text-sm text-gray-500">{application.job.companyName}</p>
-          <p className="text-sm text-gray-500">{application.job.companyEmail}</p>
-          <p className="mt-2 text-gray-700">{application.job.description}</p>
+        <div
+          key={application._id}
+          className="bg-white rounded-lg shadow-lg p-6 bg-[#F7F4FF] transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+        >
+          
+          {/* Job Title */}
+          <div className="text-2xl font-semibold text-[#3D52A0] hover:text-black transition-colors duration-300">
+            <Link to={`/job/${application.job._id}`}>{application.job.title}</Link>
+          </div>
+          
+          {/* Company Info */}
+          <p className="text-lg text-[#4A4A6A] mt-2">{application.job.companyName}</p>
+          <p className="text-lg text-[#4A4A6A]">{application.job.companyEmail}</p>
+
+          {/* Description */}
+          <p className="mt-4 text-lg text-gray-700">{application.job.description}</p>
+          <div className="mb-2 text-blue-500">
+            <Link to={`/app/${application._id}`} className="text-sm hover:text-blue-700">
+              more info
+            </Link>
+          </div>
+
+          {/* Status */}
           <div className="mt-4">
             <span
-              className={`text-sm font-medium py-1 px-2 rounded ${
-                application.status === 'applied'
-                  ? 'bg-blue-100 text-blue-600'
-                  : application.status === 'Reviewed'
-                  ? 'bg-yellow-100 text-yellow-600'
-                  : application.status === 'Shortlisted'
-                  ? 'bg-green-100 text-green-600'
-                  : application.status === 'Interview Scheduled'
-                  ? 'bg-indigo-100 text-indigo-600'
-                  : 'bg-gray-100 text-gray-600'
+              className={`text-sm font-medium py-1 px-3 rounded-full ${
+                application.status === "applied"
+                  ? "bg-blue-100 text-blue-600"
+                  : application.status === "Reviewed"
+                  ? "bg-yellow-100 text-yellow-600"
+                  : application.status === "Shortlisted"
+                  ? "bg-green-100 text-green-600"
+                  : application.status === "Interview Scheduled"
+                  ? "bg-indigo-100 text-indigo-600"
+                  : "bg-gray-100 text-gray-600"
               }`}
             >
               {application.status}
@@ -71,6 +89,8 @@ function AppliedJobs() {
         </div>
       ))}
     </div>
+  </div>
+
   );
 }
 

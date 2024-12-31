@@ -1,6 +1,12 @@
 #root {
-  max-width: 1280px;
+  max-width: 1277px;
   margin: 0 ;
   padding: 0;
   text-align: center;
+}
+:root {
+  --primary: #3D52A0;
+  --secondary: #7091E6;
+  --text-dark: #4A4A6A;
+  --bg-light: #F7F9FF;
 }

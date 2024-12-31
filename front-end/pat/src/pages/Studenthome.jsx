@@ -41,8 +41,8 @@ function Studenthome() {
     switch (activeSection) {
       case 'jobs':
         return (
-          <section className=" p-6  pt-24">
-            <h2 className="text-lg font-semibold p-6 ">Available Jobs</h2>
+          <section className=" p-1  pt-24">
+            <h2 className="text-lg font-semibold p-6 pb-6 ">Available Jobs</h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {jobs.map((job) => (
                 <DriveCard job={job} key={job._id}  className="flex justify-center"/>
@@ -52,15 +52,15 @@ function Studenthome() {
         );
       case 'applied':
         return (
-          <section className=" p-6 pt-24">
-            <h2 className="text-lg font-semibold">Applied Jobs</h2>
+          <section className=" p-1 pt-24">
+            <h2 className="text-lg font-semibold  pb-6">Applied Jobs</h2>
             <AppliedJobs />
           </section>
         );
       case 'messages':
         return (
-          <section className=" p-6 pt-24">
-            <h2 className="text-lg font-semibold">Messages</h2>
+          <section className=" p-1 pt-24">
+            <h2 className="text-lg font-semibold  pb-6">Messages</h2>
             <StudentInterviews />
           </section>
         );
@@ -72,7 +72,7 @@ function Studenthome() {
   return (
     <div className="min-h-screen justify-center w-screen">
       <Header />
-      <div className="fixed top-16 left-0 w-full bg-white shadow-md p-4 z-10">
+      <div className="fixed top-16 left-0 w-screen bg-white shadow-md p-4 z-10">
         <div className="flex justify-around">
           <button
             onClick={() => setActiveSection('jobs')}

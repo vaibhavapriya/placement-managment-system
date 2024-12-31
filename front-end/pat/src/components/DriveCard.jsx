@@ -20,7 +20,7 @@ function DriveCard({ job }) {
             {isModalOpen && <FormApplication job={job} closeModal={closeModal} />}
             <div className="flex flex-col space-y-2">
                 {/* Drive Title */}
-                <h2 className="text-xl font-semibold text-[#3D52A0]"><Link to={`/job/${job._id}`}>{job.title}</Link></h2>
+                <h2 className="text-xl font-semibold text-[#3D52A0]">{job.title}</h2>
 
                 {/* Package Information */}
                 <div className="text-lg text-[#8697C4]">
@@ -29,7 +29,7 @@ function DriveCard({ job }) {
 
                 {/* Description */}
                 <p className="text-sm text-[#6B6A85]">{job.description}</p>
-                <button className="text-[#7091E6] hover:underline focus:outline-none">delailed</button>
+                <button className="text-[#7091E6] hover:underline focus:outline-none"><Link to={`/job/${job._id}`}>delailed</Link></button>
             </div>
 
             <div className="mt-4 text-sm text-[#6B6A85]">below this changes if student all drives apply button or applied,if applied drivesin students status as read,shotlisted,interview etc if c/a:edit drive open or close status view applicants button</div>
