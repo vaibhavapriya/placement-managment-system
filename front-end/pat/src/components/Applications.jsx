@@ -6,6 +6,7 @@ function Applications({ applications }) {
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+  const job=applications[0].job.title || "";
 
   const handleView = (application) => {
     setSelectedApplication(application);[applications]
@@ -41,10 +42,10 @@ function Applications({ applications }) {
   };
 
   return (
-    <div className="p-6 bg-[#F7F9FF] text-[#3D52A0] rounded-lg shadow-md">
+    <div className="p-6 bg-[#F7F9FF] text-[#3D52A0] rounded-lg shadow-md w-100">
   {applications.length > 0 ? (
     <div>
-      <h3 className="text-2xl font-bold mb-4">Applications for this job:</h3>
+      <h3 className="text-2xl font-bold mb-4">{ job}</h3>
       <ul className="space-y-4">
         {applications.map((application) => (
           <li

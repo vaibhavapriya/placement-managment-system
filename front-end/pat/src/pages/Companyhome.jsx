@@ -132,60 +132,64 @@ function Companyhome() {
         + Add Drive
       </button>
     </div>
-    
-    {/* Job List Section */}
-    <div className="w-full max-w-4xl">
-      {loading ? (
-        <div className="text-center text-lg">Loading jobs...</div>
-      ) : (
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Jobs posted by your company:</h2>
-          {jobs.length > 0 ? (
-            <ul className="space-y-4">
-              {jobs.map((job) => (
-                <li
-                  key={job._id}
-                  className="border rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
-                >
-                  <h3 className="text-xl font-semibold text-[#3D52A0]">{job.title}</h3>
-                  <p className="text-sm text-[#6B6A85]">{job.description}</p>
-                  <p className="text-sm font-medium text-[#8697C4]">Status: {job.status}</p>
-                  <div className="mt-4 flex space-x-4">
-                    {/* Edit Button */}
-                    <button
-                      onClick={() => openModal(job)}
-                      className="px-4 py-2 bg-[#7091E6] text-white rounded hover:bg-[#5C81D4] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
-                    >
-                      Edit
-                    </button>
-                    {/* View Applications Button */}
-                    <button
-                      onClick={() => fetchApplications(job._id)}
-                      className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
-                    >
-                      View Applications
-                    </button>
-                    <button
-                      onClick={() => openInterviewModal(job)}
-                      className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
-                    >
-                      Shedule interview
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>
-          )}
-        </div>
-      )}
-    </div>
+    <section className="flex gap-8 py-10 px-6">
+  {/* Column 1: Job Listings */}
+  <div className="flex-1 max-w-xl space-y-6">
+    {loading ? (
+      <div className="text-center text-lg text-[#3D52A0]">Loading jobs...</div>
+    ) : (
+      <div>
+        <h2 className="text-3xl font-semibold text-[#3D52A0] mb-6">Jobs posted by your company:</h2>
+        {jobs.length > 0 ? (
+          <ul className="space-y-6">
+            {jobs.map((job) => (
+              <li
+                key={job._id}
+                className="border border-[#E0E7FF] rounded-lg bg-white shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300"
+              >
+                <h3 className="text-2xl font-semibold text-[#3D52A0]">{job.title}</h3>
+                <p className="text-md text-[#6B6A85] mb-2">{job.description}</p>
+                <p className="text-sm font-medium text-[#8697C4] mb-4">Status: {job.status}</p>
+                <div className="mt-4 flex flex-wrap gap-4">
+                  {/* Edit Button */}
+                  <button
+                    onClick={() => openModal(job)}
+                    className="px-5 py-2 bg-[#7091E6] text-white rounded-lg hover:bg-[#5C81D4] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                  >
+                    Edit
+                  </button>
+                  {/* View Applications Button */}
+                  <button
+                    onClick={() => fetchApplications(job._id)}
+                    className="px-5 py-2 bg-[#3D52A0] text-white rounded-lg hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                  >
+                    View Applications
+                  </button>
+                  {/* Schedule Interview Button */}
+                  <button
+                    onClick={() => openInterviewModal(job)}
+                    className="px-5 py-2 bg-[#3D52A0] text-white rounded-lg hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                  >
+                    Schedule Interview
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>
+        )}
+      </div>
+    )}
+  </div>
 
-    {/* Applications Section */}
-    <div className="w-full max-w-4xl mt-8">
-      <Applications applications={applications} />
-    </div>
+  {/* Column 2: Applications Section (twice the width of the first column) */}
+  <div className="flex-2 max-w-2xl mt-8 space-y-6">
+    <Applications applications={applications} />
+  </div>
+</section>
+
+
   </div>
 </div>
 
