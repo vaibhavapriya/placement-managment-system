@@ -132,14 +132,14 @@ function Companyhome() {
         + Add Drive
       </button>
     </div>
-    <section className="flex gap-8 py-10 px-6">
+    <section className="grid grid-cols-1 md:grid-cols-3  gap-8 py-8 px-6 w-screen">
   {/* Column 1: Job Listings */}
-  <div className="flex-1 max-w-xl space-y-6">
+  <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">
     {loading ? (
       <div className="text-center text-lg text-[#3D52A0]">Loading jobs...</div>
     ) : (
-      <div>
-        <h2 className="text-3xl font-semibold text-[#3D52A0] mb-6">Jobs posted by your company:</h2>
+      <div className="p-6 ">
+        <h2 className="text-3xl font-semibold text-[#3D52A0] mb-6"></h2>
         {jobs.length > 0 ? (
           <ul className="space-y-6">
             {jobs.map((job) => (
@@ -184,10 +184,10 @@ function Companyhome() {
   </div>
 
   {/* Column 2: Applications Section (twice the width of the first column) */}
-  <div className="flex-2 max-w-2xl mt-8 space-y-6">
+  <div className="col-span-1 md:col-span-2">
     <Applications applications={applications} />
   </div>
-</section>
+    </section>
 
 
   </div>
