@@ -1,14 +1,13 @@
 const Application = require('../models/applicationSchema');
 const JobListing = require('../models/jobListingSchema');
 const Student = require('../models/studentSchema');
+const mongoose = require('mongoose'); 
+const Interview = require('../models/interviewSchema')
 
 exports.applyForJob = async (req, res) => {
   try {
     const { candidateNote, jobId } = req.body;
     const studentId = req.user.id; // Assuming middleware sets `req.user`
-    console.log(candidateNote); // Log form data
-    console.log(req.file);
-    console.log('File uploaded:', req.file); // Debug uploaded file info
 
     // Validate jobId
     const job = await JobListing.findById(jobId);
@@ -72,7 +71,6 @@ exports.applyForJob = async (req, res) => {
 
 exports.getApplicationByJob = async (req, res) => {
   const { jobId } = req.params; // Extract the jobId from route parameters
-  console.log("jobId:", jobId);
 
   try {
     // Find applications for the given jobId
@@ -143,6 +141,35 @@ exports.getApplicationsByStudent = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching applications' });
   }
 };
+
+// Controller to get application by ID
+exports.getApplicationById = async (req, res) => {
+  try {
+    const { applicationId } = req.params; // Get the application ID from the request params
+    console.log(applicationId)
+    // Validate if the applicationId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+      return res.status(400).json({ message: 'Invalid application ID.' });
+    }
+
+    // Fetch the application by ID and populate student
+    const application = await Application.findById(applicationId)
+      .populate('student', 'name email')  
+      .populate('job', 'title companyName') ;
+
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found.' });
+    }
+
+    // Send the application details as a response
+    return res.status(200).json(application);
+
+  } catch (err) {
+    console.error('Error fetching application:', err);
+    return res.status(500).json({ message: 'Server error.' });
+  }
+};
+
 
 exports.updateApplication = async (req, res) => {
   const { applicationId } = req.params;
