@@ -167,7 +167,7 @@ exports.getInterviewsByCompanyId = async (req, res) => {
     const interviews = await Interview.find({ job: { $in: jobIds } }) // Find interviews for the given job IDs
       .populate('job', 'title companyName')  // Populate job title and company name
       .populate('student', 'name email')  // Populate student details (name, email)
-      .populate('application', 'status candidateNote')  // Populate application status and note
+      .populate('application', 'status candidateNote resume')  // Populate application status and note
       .populate('slotBooked');  // Populate booked slot if any
 
     if (interviews.length === 0) {

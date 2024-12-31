@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// Helper function to format time to IST
+const formatTimeToIST = (utcTime) => {
+  const date = new Date(utcTime);
+  const options = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  };
+  return date.toLocaleString("en-IN", options);
+};
+
 function FormSlot({ interviewId, onClose }) {
   const [slots, setSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -12,7 +28,7 @@ function FormSlot({ interviewId, onClose }) {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:5000/interviews/slots/${interviewId}`, {interviewId},// Get slots for interviewId
+          `http://localhost:5000/interviews/slots/${interviewId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -29,7 +45,7 @@ function FormSlot({ interviewId, onClose }) {
     };
 
     fetchSlots();
-  }, []);
+  }, [interviewId]); // Dependency on interviewId to fetch fresh slots if it changes
 
   const handleSlotSelection = (slotId) => {
     setSelectedSlot(slotId);
@@ -46,7 +62,7 @@ function FormSlot({ interviewId, onClose }) {
       const token = localStorage.getItem("token");
       await axios.put(
         `http://localhost:5000/interviews/slot/${interviewId}/${selectedSlot}`,
-        { interviewId: interviewId,  slotId: selectedSlot },
+        { interviewId: interviewId, slotId: selectedSlot },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,37 +80,38 @@ function FormSlot({ interviewId, onClose }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h3 className="text-lg font-bold">Schedule Interview</h3>
+    <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="modal-content bg-white p-8 rounded-lg w-full max-w-4xl max-h-screen overflow-y-auto shadow-lg"> {/* Added max-h-screen and overflow-y-auto */}
+        <h3 className="text-lg font-bold text-center mb-6">Schedule Interview</h3> {/* Added more spacing */}
         {loading ? (
-          <p>Loading available slots...</p>
+          <p className="text-center">Loading available slots...</p>
         ) : (
           <div>
-            <h4 className="text-md mb-4">Available Slots:</h4>
-            <div className="grid grid-cols-3 gap-4">
-            {slots.map((slot) => (
-            <button
-                key={slot._id}
-                onClick={() => handleSlotSelection(slot._id)}
-                disabled={slot.status === "booked"}
-                className={`px-4 py-2 border rounded ${slot.status === "booked" ? "bg-red-500 text-white cursor-not-allowed" : "bg-green-500 text-white"}`}
-            >
-                {slot.startTime} {slot.status === "booked" ? "(Booked)" : "(Open)"}
-            </button>
-            ))}
-
+            <h4 className="text-md mb-6">Available Slots:</h4> {/* Increased spacing */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Increased spacing */}
+              {slots.map((slot) => (
+                <button
+                  key={slot._id}
+                  onClick={() => handleSlotSelection(slot._id)}
+                  disabled={slot.status === "booked"}
+                  className={`px-6 py-3 rounded-lg font-medium text-white ${slot.status === "booked" ? "bg-red-500 cursor-not-allowed" : "bg-green-500 hover:bg-green-400"} transition-all duration-300 ease-in-out`}
+                >
+                  {formatTimeToIST(slot.startTime)}{" "}
+                  {slot.status === "booked" ? "(Booked)" : "(Open)"}
+                </button>
+              ))}
             </div>
-            <div className="mt-4">
+
+            <div className="mt-8 flex justify-end space-x-6"> {/* Increased space between buttons */}
               <button
                 onClick={handleSubmit}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400"
+                className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition-colors duration-300"
               >
                 {loading ? "Booking..." : "Book Slot"}
               </button>
               <button
                 onClick={onClose}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-400 ml-4"
+                className="px-8 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition-colors duration-300"
               >
                 Close
               </button>
