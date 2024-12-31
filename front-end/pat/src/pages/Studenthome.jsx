@@ -72,7 +72,7 @@ function Studenthome() {
   return (
     <div className="min-h-screen justify-center w-screen">
       <Header />
-      <div className="fixed top-16 left-0 w-screen bg-white shadow-md p-4 z-10 bg-[#F7F4FF]">
+      <div className="fixed top-16 left-0 w-screen  p-4 bg-[#F7F4FF] z-0">
         <div className="flex justify-around">
           <button
             onClick={() => setActiveSection('jobs')}
