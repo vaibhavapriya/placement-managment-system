@@ -1,57 +1,92 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useParams  } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function ApplicationDetails() {
-    const navigate = useNavigate();
-  const { applicationId} = useParams();
+  const navigate = useNavigate();
+  const { applicationId } = useParams();
   const [application, setApplication] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  console.log("appId" +applicationId);
+  console.log("appId" + applicationId);
 
   useEffect(() => {
     const fetchApplication = async () => {
+      setError(''); // Reset error before fetching
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login'); // Redirect to login if no token
+          return;
+        }
         const response = await axios.get(`http://localhost:5000/app/applications/${applicationId}`, {
-            headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setApplication(response.data);
-        setLoading(false);
       } catch (err) {
         setError('Error fetching application details');
+      } finally {
         setLoading(false);
       }
     };
 
     fetchApplication();
-  }, [applicationId]);
+  }, [applicationId, navigate]);
 
   if (loading) {
-    return <p>Loading application...</p>;
+    return <div>Loading...</div>; // Add a spinner or animation here for better UX
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <div>{error}</div>;
   }
 
   return (
-    <div>
-      <h2>Application Details</h2>
-      {application ? (
-        <div>
-          <p>Student Name: {application.student.name}</p>
-          <p>Student Email: {application.student.email}</p>
-          <p>Job Title: {application.job.title}</p>
-          <p>Company Name: {application.job.companyName}</p>
-          {/* Add other details you want to show */}
+    <div className="min-h-screen w-screen flex justify-center items-center bg-[#F7F9FF]">
+      <div className="p-8 bg-white shadow-md rounded-lg w-full max-w-3xl">
+        <div className="w-full flex justify-start mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-[#7091E6] hover:underline focus:outline-none mb-4"
+          >
+            Go Back
+          </button>
         </div>
-      ) : (
-        <p>No application found.</p>
-      )}
+        <h2 className="text-3xl font-bold text-[#3D52A0] mb-6 border-b-2 border-[#7091E6] pb-2">
+          Application Details
+        </h2>
+        {application ? (
+          <div className="space-y-4">
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Job Title:</strong> {application.job.title}
+            </p>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Company Name:</strong> {application.job.companyName}
+            </p>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Student Name:</strong> {application.student.name}
+            </p>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Student Email:</strong> {application.student.email}
+            </p>
+            <div>
+              <a href={application.resume} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                Resume
+              </a>
+            </div>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Status:</strong> {application.status}
+            </p>
+
+            {/* Add other details you want to show */}
+          </div>
+        ) : (
+          <p>No application found.</p>
+        )}
+      </div>
     </div>
   );
 }
 
 export default ApplicationDetails;
+
