@@ -26,13 +26,13 @@ function DriveCard({ job }) {
                 <div className="text-lg text-[#8697C4]">
                     <span className="font-bold text-black">Package: </span>₹{job.package} LPA
                 </div>
+                <p className="text-lg text-[#6B6A85]">{job.type}</p>
 
                 {/* Description */}
                 <p className="text-sm text-[#6B6A85]">{job.description}</p>
                 <button className="text-[#7091E6] hover:underline focus:outline-none"><Link to={`/job/${job._id}`}>delailed</Link></button>
             </div>
 
-            <div className="mt-4 text-sm text-[#6B6A85]">below this changes if student all drives apply button or applied,if applied drivesin students status as read,shotlisted,interview etc if c/a:edit drive open or close status view applicants button</div>
             {/* Apply Button */}
             <button onClick={handleApply}
                 className="mt-4 w-full py-2 px-4 text-white bg-[#3D52A0] hover:bg-[#2E4292] rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:ring-offset-2"

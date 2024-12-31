@@ -20,6 +20,7 @@ const Login = () => {
             const res = await axios.post('http://localhost:5000/auth/login', { email, password });
             const { token, role, id } = res.data;
             localStorage.setItem('token', token);
+            localStorage.setItem('userid', id);
             dispatch({
                 type: 'SET_USER',
                 payload: { id , role },
