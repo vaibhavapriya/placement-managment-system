@@ -4,6 +4,7 @@ import { usePatContext } from '../context/PatContext' ;
 import FormDrive from "../components/FormDrive";
 import Header from '../components/Header';
 import Applications from "../components/Applications";
+import FormInterview from "../components/FormInterview";
 
 function Companyhome() {
   const { state, dispatch } = usePatContext();
@@ -12,6 +13,7 @@ function Companyhome() {
   const [jobUpdated, setJobUpdated] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [shortlistedApplications, setshortlistedApplications] = useState([]);
   const user = state.id;
 
   useEffect(() => {
@@ -44,6 +46,7 @@ function Companyhome() {
   }, [jobUpdated]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
 
   const openModal = (job = null) => {
     setSelectedJob(job);  // Set the job to be edited
@@ -53,6 +56,41 @@ function Companyhome() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedJob(null);  // Clear the selected job when closing modal
+  };
+
+  const openInterviewModal = async (job) => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      alert("You must be logged in to schedule interviews.");
+      return;
+    }
+  
+    try {
+      const response = await axios.get(`http://localhost:5000/app/byJob/${job._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.data.applications) {
+        const shortlistedStudents = response.data.applications
+          .filter((app) => app.status === "Shortlisted")
+          .map((app) => app.student); // Array of shortlisted student IDs
+        setshortlistedApplications(shortlistedStudents);
+        setSelectedJob(job);
+        setIsInterviewModalOpen(true);
+      }
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+    }
+  };
+  
+
+  const closeInterviewModal = () => {
+    setIsInterviewModalOpen(false);
+    setSelectedJob(null);
+    setshortlistedApplications([]); // Clear the list of shortlisted students
   };
 
   const fetchApplications = async (jobId) => {
@@ -83,7 +121,7 @@ function Companyhome() {
   <Header />
   <div className="flex flex-col items-center px-6">
     {isModalOpen && <FormDrive closeModal={closeModal} job={selectedJob} />}
-    
+    {isInterviewModalOpen && <FormInterview closeModal={closeInterviewModal} jobId={selectedJob._id} students={shortlistedApplications}/>}
     {/* Add Drive Button */}
     <div className="mb-6">
       <button
@@ -125,6 +163,12 @@ function Companyhome() {
                       className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
                     >
                       View Applications
+                    </button>
+                    <button
+                      onClick={() => openInterviewModal(job)}
+                      className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                    >
+                      Shedule interview
                     </button>
                   </div>
                 </li>
