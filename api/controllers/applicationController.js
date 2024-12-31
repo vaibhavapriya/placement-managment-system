@@ -154,7 +154,7 @@ exports.getApplicationById = async (req, res) => {
 
     // Fetch the application by ID and populate student
     const application = await Application.findById(applicationId)
-      .populate('student', 'name email')  
+      .populate('student', 'name email coverLetter grade achievements transcripts')  
       .populate('job', 'title companyName') ;
 
     if (!application) {
