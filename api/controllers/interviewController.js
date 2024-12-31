@@ -95,23 +95,18 @@ exports.scheduleInterview = async (req, res) => {
     
         // Update JobListing with the new interview
         await JobListing.findByIdAndUpdate(jobId, { $push: { interviews: savedInterview._id } });
-        console.log("JobListing updated with new interview:", jobId);
-    
+
+        await Application.findByIdAndUpdate(applicationId, { $push: { interviews: savedInterview._id } });
+        
         // Update Student with the new interview
         await Student.findOneAndUpdate(
           { userid: studentId }, // Match by `userid` for students
           { $push: { interviews: savedInterview._id } }, // Push interview to student's interview array
           { new: true } // Return updated student
         );
-        console.log("Student updated with new interview:", studentId);
     
         // Update the application status to 'Shortlisted'
         const updatedApplication = await Application.findByIdAndUpdate(applicationId, { status: 'Interview Scheduled' }, { new: true });
-        if (updatedApplication) {
-          console.log("Application status updated to 'Shortlisted':", updatedApplication._id);
-        } else {
-          console.error("Failed to update application status:", applicationId);
-        }
       } catch (err) {
         // Log the specific error to understand what went wrong
         console.error("Error creating interview for student:", { studentId, applicationId }, err);
