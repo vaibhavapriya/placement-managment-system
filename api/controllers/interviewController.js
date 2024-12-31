@@ -141,7 +141,7 @@ exports.getInterviewsByStudentId = async (req, res) => {
     // Find all interviews associated with the student using the student's _id
     const interviews = await Interview.find({ student: student.userid})  
       .populate('job', 'title companyName')  // Populate job details (title and companyName)
-      .populate('application')
+      .populate('application', 'status resume candidateNote') 
       .populate('student', 'name email')
       .populate('slotBooked')  ;
 

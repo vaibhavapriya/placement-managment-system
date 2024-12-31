@@ -22,7 +22,7 @@ function StudentInterviews() {
         }
 
         // Assuming the API endpoint is `/interviews/:userId` to fetch interviews for a student
-        const response = await axios.get(`http://localhost:5000/interviews/${studentId}`, {
+        const response = await axios.get(`http://localhost:5000/interviews/byStudent/${studentId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

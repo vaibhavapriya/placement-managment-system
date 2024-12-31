@@ -4,7 +4,7 @@ const router = express.Router();
 
 // POST: Schedule an interview
 router.post('/schedule', scheduleInterview);
-router.get('/:userId', getInterviewsByStudentId);
+router.get('/byStudent/:userId', getInterviewsByStudentId);
 
 // GET: Get all interviews for a specific job
 //router.get('/job/:jobId', getInterviewsForJob);

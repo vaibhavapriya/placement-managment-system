@@ -9,6 +9,7 @@ const interviewSchema = new mongoose.Schema({
   slots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Slot' }], // Array of available slot references
   slotBooked:{ type: mongoose.Schema.Types.ObjectId, ref: 'Slot' ,default: null },
   location: { type: String }, // Required if interviewType is 'in-person'
+  url: { type: String },
   status: { type: String, enum: ['Scheduled', 'Completed', 'Cancelled'], default: 'Scheduled' }, // Interview status
   feedback: { type: String }, // Feedback from the interviewer
 }, { timestamps: true });
