@@ -127,7 +127,7 @@ const Companyhome = () => {
         {/* job secton */}
         <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">
             {loading ? <div>Loading jobs...</div> : jobs.length > 0 ? jobs.map(job => (
-              <JobCard key={job._id} job={job} applications={applications} setApplications={setApplications}/>
+              <JobCard key={job._id} job={job} applications={applications} setApplications={setApplications} />
             )):(<p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>)}
         </div>
         {/* <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">

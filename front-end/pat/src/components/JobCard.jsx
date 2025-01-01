@@ -25,6 +25,7 @@ function JobCard({ job , applications , setApplications}) {
 
 
     const fetchApplications = async (jobId) => {
+      
       const token = localStorage.getItem('token');
       if (!token) {
         alert('You must be logged in to view applications.');
@@ -41,10 +42,10 @@ function JobCard({ job , applications , setApplications}) {
         if (response.data.applications) {
           setApplications(response.data.applications);
         }
-      } catch (error) {
-        console.error("Error fetching applications:", error);
+      }catch (err) {
+        const errorMessage = err.response?.data?.error || "Something went wrong";
+        alert(errorMessage ); // Set the error to state
       }
-      console.log(applications)
     };
     const openInterviewModal = async (job) => {
       const token = localStorage.getItem("token");
