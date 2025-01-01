@@ -6,7 +6,7 @@ function Applications({ applications }) {
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-  const job = applications.length > 0 && applications[0].job ? applications[0].job.title : "";
+  const job = applications.length > 0 && applications[0].job ? applications[0].job.title : "No application submitted";
 
 
   const handleView = (application) => {

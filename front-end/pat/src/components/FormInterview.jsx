@@ -4,7 +4,6 @@ import axios from "axios";
 const FormInterview = ({ jobId, closeModal, students }) => {
   const [slots, setSlots] = useState([{ startTime: "", endTime: "" }]);
   const [type, setType] = useState("virtual");
-  const [videoCallLink, setVideoCallLink] = useState("");
   const [location, setLocation] = useState("");
   const [allowBooking, setAllowBooking] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,11 +41,6 @@ const FormInterview = ({ jobId, closeModal, students }) => {
       return;
     }
 
-    if (type === "virtual" && !videoCallLink) {
-      setError("Please provide a video call link for virtual interviews.");
-      return;
-    }
-
     if (type === "in-person" && !location) {
       setError("Please provide a location for in-person interviews.");
       return;
@@ -68,7 +62,6 @@ const FormInterview = ({ jobId, closeModal, students }) => {
           jobId,
           slots,
           type,
-          videoCallLink,
           location,
           allowBooking,
           students,
@@ -109,16 +102,7 @@ const FormInterview = ({ jobId, closeModal, students }) => {
 
           {/* Dynamic Fields */}
           {type === "virtual" ? (
-            <div className="mb-4">
-              <label className="block font-medium mb-1">Video Call Link</label>
-              <input
-                type="url"
-                value={videoCallLink}
-                onChange={(e) => setVideoCallLink(e.target.value)}
-                className="w-full px-3 py-2 border rounded"
-                placeholder="Enter video call link"
-              />
-            </div>
+            <div className="mb-4"></div>
           ) : (
             <div className="mb-4">
               <label className="block font-medium mb-1">Location</label>
