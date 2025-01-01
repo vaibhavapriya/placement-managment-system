@@ -9,8 +9,9 @@ function Interviews({ companyId }) {
     const fetchInterviews = async () => {
       try {
         const token = localStorage.getItem("token");
+        const companyId = localStorage.getItem('userid');
         const response = await axios.get(
-          `http://localhost:5000/app/interviews/${companyId}`,
+          `http://localhost:5000/interviews/byCompany/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,11 +1,12 @@
 const express = require('express');
-const { getInterviewsByStudentId, bookSlotForInterview, getSlotsForInterview } = require('../controllers/interviewController');
+const { getInterviewsByStudentId, bookSlotForInterview, getSlotsForInterview, getInterviewsByCompanyId } = require('../controllers/interviewController');
 const { scheduleInterview } = require('../controllers/scheduleInterview ')
 const router = express.Router();
 
 // POST: Schedule an interview
 router.post('/schedule', scheduleInterview);
 router.get('/byStudent/:userId', getInterviewsByStudentId);
+router.get('/byCompany/:userId',getInterviewsByCompanyId)
 router.get('/slots/:interviewId',getSlotsForInterview );
 router.put('/slot/:interviewId/:slotId',bookSlotForInterview);
 

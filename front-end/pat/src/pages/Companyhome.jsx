@@ -5,6 +5,7 @@ import FormDrive from "../components/FormDrive";
 import Header from '../components/Header';
 import Applications from "../components/Applications";
 import FormInterview from "../components/FormInterview";
+import Interviews from "../components/Interviews";
 
 function Companyhome() {
   const { state, dispatch } = usePatContext();
@@ -14,7 +15,7 @@ function Companyhome() {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [shortlistedApplications, setshortlistedApplications] = useState([]);
-  const user = state.id;
+  const user = localStorage.getItem('userid');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -188,6 +189,10 @@ function Companyhome() {
     <Applications applications={applications} />
   </div>
     </section>
+    <div>
+      <Interviews/>
+    </div>
+  
 
 
   </div>
