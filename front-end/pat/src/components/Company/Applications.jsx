@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function Applications({ applications }) {
+function Applications({ applications, error }) {
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");

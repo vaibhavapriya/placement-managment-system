@@ -219,6 +219,7 @@ const Companyhome = () => {
   const [jobUpdated, setJobUpdated] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [error, setError] = useState(null); 
   const [shortlistedApplications, setShortlistedApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
@@ -286,29 +287,56 @@ const Companyhome = () => {
     // setshortlistedApplications([]); 
   };
 
-  const onViewApplications = async(jobId) => {
+  // const onViewApplications = async(jobId) => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     alert('You must be logged in to view applications.');
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.get(`http://localhost:5000/app/byJob/${jobId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (response.data.applications) {
+  //       setApplications(response.data.applications);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching applications:", error);
+  //   }
+  //   console.log("Viewing applications for job:", jobId);
+  //   // You can add more logic here (e.g., navigate to a different page or show a modal with the applications)
+  // };
+  const onViewApplications = async (jobId) => {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('You must be logged in to view applications.');
       return;
     }
-
+  
     try {
       const response = await axios.get(`http://localhost:5000/app/byJob/${jobId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (response.data.applications) {
+  
+      if (response.data.applications && response.data.applications.length > 0) {
         setApplications(response.data.applications);
+      } else {
+        setApplications([]); // Clear applications if no applications found
+        setError("No applications found for this job.");
       }
     } catch (error) {
       console.error("Error fetching applications:", error);
+      setError("Error fetching applications.");
     }
     console.log("Viewing applications for job:", jobId);
-    // You can add more logic here (e.g., navigate to a different page or show a modal with the applications)
   };
+  
   
   return (
     <div className="w-screen min-h-screen pt-16 bg-[#F7F9FF] text-[#3D52A0]">
@@ -329,7 +357,7 @@ const Companyhome = () => {
 
           {/* Applications Section */}
           <div className="col-span-1 md:col-span-2">
-            <Applications applications={applications} />
+            <Applications applications={applications} error={error} />
           </div>
         </section>
         <Interviews />
