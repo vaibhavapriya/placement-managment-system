@@ -184,7 +184,10 @@ exports.updateApplication = async (req, res) => {
 
     // Update the status and feedback fields
     application.status = status || application.status;
-    application.feedback = feedback || application.feedback;
+    // Push new feedback to the feedback array if provided
+    if (feedback) {
+      application.feedback.push(feedback); // This will add the feedback to the array
+    }
 
     await application.save();
 

@@ -115,7 +115,7 @@ function Applications({ applications }) {
         </label>
         <textarea
           id="feedback"
-          value={feedback}
+          value={null}
           onChange={(e) => setFeedback(e.target.value)}
           disabled={loading}
           className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"

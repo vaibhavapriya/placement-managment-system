@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../components/Header';
 import DriveCard from '../components/DriveCard';
-import AppliedJobs from '../components/AppliedJobs';
-import StudentInterviews from '../components/StudentInterviews';
+import AppliedJobs from '../components/Student/AppliedJobs';
+import StudentInterviews from '../components/Student/StudentInterviews';
 
 function Studenthome() {
   // State for active section

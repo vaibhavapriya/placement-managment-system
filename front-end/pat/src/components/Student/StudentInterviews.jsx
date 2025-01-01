@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { usePatContext } from '../context/PatContext';
+import { usePatContext } from '../../context/PatContext';
 import { Link } from 'react-router-dom';
-import FormSlot from './FormSlot';
+import FormSlot from '../FormSlot';
 
 function StudentInterviews() {
   const { state, dispatch } = usePatContext();

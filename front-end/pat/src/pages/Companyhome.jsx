@@ -3,9 +3,9 @@ import axios from "axios";
 import { usePatContext } from '../context/PatContext' ;
 import FormDrive from "../components/FormDrive";
 import Header from '../components/Header';
-import Applications from "../components/Applications";
+import Applications from "../components/Company/Applications";
 import FormInterview from "../components/FormInterview";
-import Interviews from "../components/Interviews";
+import Interviews from "../components/Company/Interviews";
 
 function Companyhome() {
   const { state, dispatch } = usePatContext();
