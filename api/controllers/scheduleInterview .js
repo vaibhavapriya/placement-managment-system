@@ -91,125 +91,121 @@ const sendReminderEmail = async (studentEmail, interviewDetails) => {
 // Function to schedule interview
 exports.scheduleInterview = async (req, res) => {
   try {
-    const { jobId, slots, type, videoCallLink, location, allowBooking, students } = req.body;
+    const { jobId, slots, type, location, allowBooking, students, startTime, duration, agenda } = req.body;
 
-    // Validate required fields
     if (!jobId || !slots || !type || !students || students.length === 0) {
       return res.status(400).json({ message: "Missing required fields or no students selected." });
     }
 
-    // Validate interview type
     if (!["virtual", "in-person"].includes(type)) {
       return res.status(400).json({ message: "Invalid interview type." });
     }
 
-    // Create Slots and Save them
-    const createdSlots = [];
-    for (let i = 0; i < slots.length; i++) {
+    if (!slots || slots.length === 0) {
+      return res.status(400).json({ message: "Slots are required and cannot be empty." });
+    }
+
+    // Zoom link generation
+    let zoomLink = null;
+    if (type === "virtual") {
       try {
+        zoomLink = await createZoomMeeting({
+          topic: 'Candidate Interview',
+          startTime: slots[0]?.startTime || startTime, // Earliest slot or provided start time
+          duration: duration || 60,
+          agenda: agenda || 'Interview with candidate',
+        });
+        console.log('Zoom Meeting Link:', zoomLink);
+      } catch (error) {
+        console.error('Error in scheduleInterview:', error.message);
+        return res.status(500).json({ message: 'Failed to schedule Zoom interview' });
+      }
+    }
+
+    // Create slots
+    const createdSlots = [];
+    try {
+      for (let slot of slots) {
         const newSlot = new Slot({
           job: jobId,
-          startTime: new Date(slots[i].startTime),
-          endTime: new Date(slots[i].endTime),
+          startTime: new Date(slot.startTime),
+          endTime: new Date(slot.endTime),
           status: allowBooking ? 'open' : 'booked',
         });
         const savedSlot = await newSlot.save();
         createdSlots.push(savedSlot._id);
-      } catch (err) {
-        return res.status(500).json({ message: "Error creating slot." });
       }
+    } catch (err) {
+      console.error("Error creating slots:", err.message);
+      return res.status(500).json({ message: "Error creating slots." });
     }
 
-    // Assuming slots is an array of objects with a `startTime` property
-    const getEarliestSlotTime = (slots) => {
-      if (!slots || slots.length === 0) {
-        throw new Error("No slots available to determine start time");
-      }
+    // Determine earliest slot time
+    const interviewDate = new Date(
+      Math.min(...slots.map((slot) => new Date(slot.startTime)))
+    );
 
-      const sortedSlots = slots.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-      return sortedSlots[0].startTime; // Return the earliest start time
-    };
-
-    const interviewDate = getEarliestSlotTime(slots);
-
-
-    // Create Interviews for each student and assign slots
-    for (let i = 0; i < students.length; i++) {
-      const studentId = students[i]?.student?.userid;
-      const applicationId = students[i]?._id;
-      const student = students[i]?.student;
-
-      if (!studentId || !applicationId) {
-        continue;
-      }
-
-      let slotBooked = null;
-      if (!allowBooking) {
-        slotBooked = createdSlots[i] || null;
-      }
-
+    const errors = [];
+    for (let studentData of students) {
       try {
-        // Create the interview object
+        const { student, _id: applicationId } = studentData;
         const interview = new Interview({
           job: jobId,
-          student: studentId,
+          student: student.userid,
           application: applicationId,
           interviewType: type,
-          interviewDate: interviewDate,
+          interviewDate,
           slots: createdSlots,
-          slotBooked,
+          slotBooked: allowBooking ? null : createdSlots[0],
           location: type === "in-person" ? location : undefined,
-          url: type === "virtual" ? videoCallLink : undefined,
+          url: type === "virtual" ? zoomLink : undefined,
           status: "Scheduled",
         });
-
-        // Save the interview
         const savedInterview = await interview.save();
 
-        // Update JobListing with the new interview
         await JobListing.findByIdAndUpdate(jobId, { $push: { interviews: savedInterview._id } });
-
-        // Update Application with the new interview
-        await Application.findByIdAndUpdate(applicationId, { $push: { interviews: savedInterview._id } });
-
-        // Update Student with the new interview
+        await Application.findByIdAndUpdate(applicationId, { status: 'Interview Scheduled', $push: { interviews: savedInterview._id } });
         await Student.findOneAndUpdate(
-          { userid: studentId },
+          { userid: student.userid },
           { $push: { interviews: savedInterview._id } },
           { new: true }
         );
 
-        // Update the application status to 'Shortlisted'
-        await Application.findByIdAndUpdate(applicationId, { status: 'Interview Scheduled' }, { new: true });
-
-        // Send the interview scheduled email to the student
-        const interviewDetails = {
-          jobTitle: "Job Title", // Replace with actual job title
+        // Send email
+        await sendInterviewScheduledEmail(student.email, {
+          jobTitle: "Job Title",
           studentName: student.name,
-          interviewDate: new Date(interview.interviewDate).toLocaleDateString(),
-          interviewTime: new Date(interview.interviewDate).toLocaleTimeString(),
-          interviewType: interview.interviewType,
-          interviewLink: interview.url,
-          interviewLocation: interview.location,
-        };
-
-        await sendInterviewScheduledEmail(student.email, interviewDetails);
-
-        // Schedule reminder email 1 hour before the interview
-        const interviewTime = new Date(interview.interviewDate);
-        const reminderTime = new Date(interviewTime.getTime() - 60 * 60 * 1000); // 1 hour before
-
-        cron.schedule(`${reminderTime.getMinutes()} ${reminderTime.getHours()} ${reminderTime.getDate()} ${reminderTime.getMonth() + 1} *`, async () => {
-          await sendReminderEmail(student.email, interviewDetails);
+          interviewDate: interviewDate.toLocaleDateString(),
+          interviewTime: interviewDate.toLocaleTimeString(),
+          interviewType: type,
+          interviewLink: zoomLink,
+          interviewLocation: location,
         });
 
+        const reminderTime = new Date(interviewDate.getTime() - 60 * 60 * 1000);
+        cron.schedule(`${reminderTime.getMinutes()} ${reminderTime.getHours()} ${reminderTime.getDate()} ${reminderTime.getMonth() + 1} *`, async () => {
+          await sendReminderEmail(student.email, {
+            jobTitle: "Job Title",
+            interviewDate: interviewDate.toLocaleDateString(),
+            interviewTime: interviewDate.toLocaleTimeString(),
+          });
+        });
       } catch (err) {
-        return res.status(500).json({ message: "Error creating interview.", error: err.message });
+        errors.push({ student: studentData.student?.userid, error: err.message });
       }
+    }
+
+    if (errors.length > 0) {
+      return res.status(207).json({ message: "Partial success", errors });
     }
 
     res.status(201).json({ message: "Interviews scheduled successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Unexpected error:", err.message);
+    // Ensure response is only sent once
+    if (!res.headersSent) {
+      res.status(500).json({ message: "Server error" });
+    }
   }
 };
+
