@@ -170,7 +170,6 @@ exports.scheduleInterview = async (req, res) => {
           { $push: { interviews: savedInterview._id } },
           { new: true }
         );
-
         // Send email
         await sendInterviewScheduledEmail(student.email, {
           jobTitle: "Job Title",
