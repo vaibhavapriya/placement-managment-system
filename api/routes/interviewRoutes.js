@@ -6,7 +6,7 @@ const router = express.Router();
 // POST: Schedule an interview
 router.post('/schedule', scheduleInterview);
 router.get('/byStudent/:userId', getInterviewsByStudentId);
-router.get('/byCompany/:userId',getInterviewsByCompanyId)
+router.get('/byCompany/:companyId',getInterviewsByCompanyId)
 router.get('/slots/:interviewId',getSlotsForInterview );
 router.put('/slot/:interviewId/:slotId',bookSlotForInterview);
 

@@ -153,24 +153,32 @@ exports.getInterviewsByStudentId = async (req, res) => {
 
 exports.getInterviewsByCompanyId = async (req, res) => {
   try {
-    const { companyId } = req.params;  // Extract the companyId from request parameters
+    const { companyId } = req.params; // Extract the companyId from request parameters
+
+    console.log("Fetching job listings for company ID:", companyId);
 
     // Step 1: Find all job listings for the given company
-    const jobListings = await JobListing.find({ company: companyId }); // Assuming the 'company' field links the job to a company
+    const jobListings = await JobListing.find({ company: companyId });
 
-    if (jobListings.length === 0) {
+    console.log("Job Listings found:", jobListings);
+
+    if (!jobListings || jobListings.length === 0) {
       return res.status(404).json({ message: "No job listings found for this company." });
     }
 
     // Step 2: Get all interviews associated with these job listings
-    const jobIds = jobListings.map(job => job._id);  // Extract job IDs
-    const interviews = await Interview.find({ job: { $in: jobIds } }) // Find interviews for the given job IDs
-      .populate('job', 'title companyName')  // Populate job title and company name
-      .populate('student', 'name email')  // Populate student details (name, email)
-      .populate('application', 'status candidateNote resume')  // Populate application status and note
-      .populate('slotBooked');  // Populate booked slot if any
+    const jobIds = jobListings.map(job => job._id);
+    console.log("Job IDs extracted:", jobIds);
 
-    if (interviews.length === 0) {
+    const interviews = await Interview.find({ job: { $in: jobIds } })
+      .populate('job', 'title companyName') // Populate job title and company name
+      .populate('student', 'name email') // Populate student details (name, email)
+      .populate('application', 'status candidateNote resume feedback') // Populate application status and note
+      .populate('slotBooked'); // Populate booked slot if any
+
+    console.log("Interviews fetched:", interviews);
+
+    if (!interviews || interviews.length === 0) {
       return res.status(404).json({ message: "No interviews found for this company." });
     }
 
@@ -181,6 +189,7 @@ exports.getInterviewsByCompanyId = async (req, res) => {
     return res.status(500).json({ message: "Server error." });
   }
 };
+
 
 exports.getSlotsForInterview = async (req, res) => {
   try {
@@ -394,6 +403,7 @@ exports.getInterviewSchedulesByJobId = async (req, res) => {
     if (!jobId) {
       return res.status(400).json({ message: 'Missing jobId.' });
     }
+    const jobs = await JobListing.find({ company: companyId });
 
     // Fetch all interview schedules for the job
     const interviews = await Interview.find({ job: jobId })
@@ -456,15 +466,3 @@ exports.bookSlot = async (req, res) => {
     }
   };
 
-  // Example notification function
-  // exports.sendNotifications = async () => {
-  //   // Use `node-cron` to schedule this job
-  //   cron.schedule("0 9 * * *", async () => {
-  //     const upcomingInterviews = await Interview.find({ date: { $gte: new Date() } });
-  
-  //     upcomingInterviews.forEach((interview) => {
-  //       // Logic to send email reminders
-  //     });
-  //   });
-  // };
-    
