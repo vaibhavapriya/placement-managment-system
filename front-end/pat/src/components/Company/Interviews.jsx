@@ -44,6 +44,7 @@ function Interviews() {
     <div className="p-6 bg-[#F7F9FF] text-[#3D52A0] rounded-lg shadow-md">
       <h3 className="text-2xl font-bold mb-4">Interviews for this company:</h3>
       <ul className="space-y-4">
+        {console.log(interviews)}
         {interviews.map((interview) => (
           <li
             key={interview._id}
@@ -77,9 +78,15 @@ function Interviews() {
             >
               View Resume
             </a>
-            <p className="text-sm text-[#6B6A85]">
-              Candidate Note: {interview.application?.feedback || "N/A"}
-            </p>
+            <p className="text-sm text-[#6B6A85]"> Company feedback: </p>
+            <ul className="text-sm text-[#6B6A85]">
+            {interview.application?.feedback.length > 0 
+              ? interview.application.feedback.map((feedbackItem, index) => (
+                  <li key={index}>{feedbackItem}</li>
+                ))
+              : "N/A"
+            }
+          </ul>
 
             {/* Interview Information */}
             <p className="text-sm text-[#6B6A85]">
