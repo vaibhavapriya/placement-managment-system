@@ -12,7 +12,7 @@ function Applications({ applications }) {
   const handleView = (application) => {
     setSelectedApplication(application);[applications]
     setStatus(application.status);
-    setFeedback(application.feedback || "");
+    setFeedback("");
   };
   useEffect (() =>{
     setSelectedApplication(null);
@@ -77,67 +77,71 @@ function Applications({ applications }) {
   )}
 
   {selectedApplication && (
-    <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
-      <h4 className="text-xl font-bold mb-4 text-[#3D52A0]">Update Application</h4>
-      <p className="mb-4 text-sm text-[#6B6A85]">
-        <span className="font-semibold text-[#3D52A0]">Student Name:</span>{" "}
-        {selectedApplication.student.name}
-      </p>
-      <div className="mb-4">
-        <label
-          htmlFor="status"
-          className="block text-sm font-medium text-[#3D52A0]"
-        >
-          Status:
-        </label>
-        <select
-          id="status"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          disabled={loading}
-          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
-        >
-          <option value="applied">Applied</option>
-          <option value="Reviewed">Reviewed</option>
-          <option value="Shortlisted">Shortlisted</option>
-          <option value="Interview Scheduled">Interview Scheduled</option>
-          <option value="Selected">Selected</option>
-          <option value="Hired">Hired</option>
-          <option value="Rejected">Rejected</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="feedback"
-          className="block text-sm font-medium text-[#3D52A0]"
-        >
-          Feedback:
-        </label>
-        <textarea
-          id="feedback"
-          value={null}
-          onChange={(e) => setFeedback(e.target.value)}
-          disabled={loading}
-          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <button
-          onClick={() => updateApplication(selectedApplication._id)}
-          disabled={loading}
-          className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
-        >
-          {loading ? "Updating..." : "Update Application"}
-        </button>
-        <button
-          onClick={() => setSelectedApplication(null)}
-          className="px-4 py-2 bg-[#8697C4] text-white rounded hover:bg-[#6F7BAA] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  )}
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            onClick={() => setSelectedApplication(null)} // Close modal on backdrop click
+          >
+            <div
+              className="bg-white rounded-lg shadow-lg p-6 w-96"
+              onClick={(e) => e.stopPropagation()} // Prevent modal closing when clicking inside
+            >
+              <h4 className="text-xl font-bold mb-4 text-[#3D52A0]">Update Application</h4>
+              <p className="mb-4 text-sm text-[#6B6A85]">
+                <span className="font-semibold text-[#3D52A0]">Student Name:</span> {selectedApplication.student.name}
+              </p>
+
+              <div className="mb-4">
+                <label htmlFor="status" className="block text-sm font-medium text-[#3D52A0]">
+                  Status:
+                </label>
+                <select
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  disabled={loading}
+                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+                >
+                  <option value="applied">Applied</option>
+                  <option value="Reviewed">Reviewed</option>
+                  <option value="Shortlisted">Shortlisted</option>
+                  <option value="Interview Scheduled">Interview Scheduled</option>
+                  <option value="Selected">Selected</option>
+                  <option value="Hired">Hired</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="feedback" className="block text-sm font-medium text-[#3D52A0]">
+                  Feedback:
+                </label>
+                <textarea
+                  id="feedback"
+                  value={feedback} // This feedback is now empty by default
+                  onChange={(e) => setFeedback(e.target.value)}
+                  disabled={loading}
+                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:border-[#7091E6]"
+                />
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => updateApplication(selectedApplication._id, status, feedback)}
+                  disabled={loading}
+                  className="px-4 py-2 bg-[#3D52A0] text-white rounded hover:bg-[#2E4292] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                >
+                  {loading ? "Updating..." : "Update Application"}
+                </button>
+                <button
+                  onClick={() => setSelectedApplication(null)} // Close the modal
+                  className="px-4 py-2 bg-[#8697C4] text-white rounded hover:bg-[#6F7BAA] focus:outline-none focus:ring-2 focus:ring-[#7091E6] transition duration-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 </div>
 
   );
