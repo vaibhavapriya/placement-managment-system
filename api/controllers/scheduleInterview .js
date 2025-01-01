@@ -119,6 +119,19 @@ exports.scheduleInterview = async (req, res) => {
       }
     }
 
+    // Assuming slots is an array of objects with a `startTime` property
+    const getEarliestSlotTime = (slots) => {
+      if (!slots || slots.length === 0) {
+        throw new Error("No slots available to determine start time");
+      }
+
+      const sortedSlots = slots.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+      return sortedSlots[0].startTime; // Return the earliest start time
+    };
+
+    const interviewDate = getEarliestSlotTime(slots);
+
+
     // Create Interviews for each student and assign slots
     for (let i = 0; i < students.length; i++) {
       const studentId = students[i]?.student?.userid;
@@ -141,7 +154,7 @@ exports.scheduleInterview = async (req, res) => {
           student: studentId,
           application: applicationId,
           interviewType: type,
-          interviewDate: slots[0].startTime,
+          interviewDate: interviewDate,
           slots: createdSlots,
           slotBooked,
           location: type === "in-person" ? location : undefined,
