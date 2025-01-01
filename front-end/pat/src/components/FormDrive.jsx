@@ -8,7 +8,7 @@ function FormDrive({ closeModal, job }) {
         package: 0,
         location: '',
         requirements: '', // Can be a comma-separated string or array
-        type:''
+        Jtype: 'Fulltime' // Keep Jtype for frontend
     });
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function FormDrive({ closeModal, job }) {
                 status: job.status || '',
                 package: job.package || '',
                 requirements: job.requirements ? job.requirements.join(', ') : '', // Ensure it's a comma-separated string if it's an array
-                type:job.type||'',
+                Jtype: job.type || 'Fulltime', // Default to Fulltime if not provided
             });
         }
     }, [job]);
@@ -50,11 +50,12 @@ function FormDrive({ closeModal, job }) {
             location: jobDetails.location,
             requirements: jobDetails.requirements.split(',').map((req) => req.trim()), // Convert comma-separated string to array
             status: jobDetails.status,
-            type:jobDetails.type,
+            type: jobDetails.Jtype, // Map Jtype to type here
         };
+
         try {
             let response;
-            
+
             // If editing an existing job, use PUT. If creating a new job, use POST.
             if (job && job._id) {
                 response = await axios.put(`http://localhost:5000/jobs/edit/${job._id}`, updatedJob, {
@@ -65,7 +66,7 @@ function FormDrive({ closeModal, job }) {
                     headers: { Authorization: `Bearer ${token}` },
                 }); // Create new job
             }
-    
+
             console.log('Job created/updated successfully:', response.data);
             alert('Job posted/updated successfully!');
             closeModal();
@@ -144,20 +145,22 @@ function FormDrive({ closeModal, job }) {
                             className="p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
+
                     <div className="flex flex-col">
-                        <label htmlFor="type" className="font-semibold text-lg">Type</label>
+                        <label htmlFor="Jtype" className="font-semibold text-lg">Type</label>
                         <select
-                            id="type"
-                            name="type"
-                            value={jobDetails.type}
+                            id="Jtype"
+                            name="Jtype"
+                            value={jobDetails.Jtype}
                             onChange={handleChange}
                             required
                             className="p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value='Fulltime'>Fulltime</option>
-                            <option value='Internship'>Internship</option>
+                            <option value="Fulltime">Fulltime</option>
+                            <option value="Internship">Internship</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col">
                         {/* Conditionally render the "Status" field if the job exists */}
                         {job && job._id && (
@@ -200,3 +203,4 @@ function FormDrive({ closeModal, job }) {
 }
 
 export default FormDrive;
+

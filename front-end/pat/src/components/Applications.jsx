@@ -6,7 +6,8 @@ function Applications({ applications }) {
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-  const job=applications[0].job.title || "";
+  const job = applications.length > 0 && applications[0].job ? applications[0].job.title : "";
+
 
   const handleView = (application) => {
     setSelectedApplication(application);[applications]
@@ -100,7 +101,9 @@ function Applications({ applications }) {
           <option value="Reviewed">Reviewed</option>
           <option value="Shortlisted">Shortlisted</option>
           <option value="Interview Scheduled">Interview Scheduled</option>
+          <option value="Selected">Selected</option>
           <option value="Hired">Hired</option>
+          <option value="Rejected">Rejected</option>
         </select>
       </div>
       <div className="mb-4">

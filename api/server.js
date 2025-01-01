@@ -8,6 +8,7 @@ const jobRoutes = require('./routes/joblistingRoutes')
 const appRoutes = require('./routes/applicationRoutes')
 const stuRoutes = require('./routes/studentRoutes')
 const intRoutes = require('./routes/interviewRoutes')
+const dashRoutes = require('./routes/dashboardRoutes')
 //const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -38,6 +39,7 @@ app.use('/jobs', jobRoutes);
 app.use('/auth', authRoutes);
 app.use('/student',stuRoutes);
 app.use('/interviews', intRoutes);
+app.use('/dashboard',dashRoutes)
 
 // Error Handling Middleware
 //app.use(errorHandler);

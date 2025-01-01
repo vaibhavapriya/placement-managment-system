@@ -16,7 +16,7 @@ exports.forgotPassword = async (req, res, next) => {
     user.resetTokenExpiry = resetTokenExpiry;
     await user.save();
     
-    //const resetLink = `netlifypage/reset-password/${resetToken}`;
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
 
     // Send email
     const transporter = nodemailer.createTransport({
@@ -33,7 +33,7 @@ exports.forgotPassword = async (req, res, next) => {
       html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`,
     });
 
-    res.json({ message: 'Password reset link sent' });
+    res.json({ message: `Password reset link sent:${resetLink}` });
   } catch (err) {
     next(err); // Forward error to errorHandler middleware
   }
