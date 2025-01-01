@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/uploadMiddleware');
+const upload = require('../services/cloudinaryConfig');
 const applicationController = require('../controllers/applicationController');
 const { validateToken } = require('../middlewares/validateToken');
 const { getApplicationByJob, getApplicationsByStudent, updateApplication ,getApplicationById } = require('../controllers/applicationController');

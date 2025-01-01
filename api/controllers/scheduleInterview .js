@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
+const { createZoomMeeting } = require('../services/zoomService');
 const Interview = require('../models/interviewSchema');
 const Slot = require('../models/slotScheme'); // Assuming Slot is another model for interview slots
 const JobListing = require('../models/jobListingSchema'); // Assuming this model exists for job listings

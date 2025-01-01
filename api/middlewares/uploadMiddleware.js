@@ -1,3 +1,4 @@
+
 const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -10,18 +11,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Configure Multer Storage with Cloudinary
+// Set up Cloudinary storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'resumes',  // Folder in Cloudinary
-    format: 'pdf',  // Explicitly set the format to PDF
-    resource_type: 'raw',
-    public_id: (req, file) => Date.now() + '-' + file.originalname.replace('.pdf', ''),  // Remove .pdf from the original file name to prevent duplication
+    folder: 'resumes', // Folder name in Cloudinary
+    format: async (req, file) => 'pdf', // Force files to be stored as PDF
+    public_id: (req, file) => Date.now() + '-' + file.originalname, // Unique file name
   },
 });
 
-// Create Multer instance
 const upload = multer({ storage });
 
 module.exports = upload;
