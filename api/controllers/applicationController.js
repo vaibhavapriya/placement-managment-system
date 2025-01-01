@@ -154,15 +154,21 @@ exports.getApplicationById = async (req, res) => {
 
     // Fetch the application by ID and populate student
     const application = await Application.findById(applicationId)
-      .populate('student', 'name email coverLetter grade achievements transcripts')  
-      .populate('job', 'title companyName') ;
+      .populate('student','name')  
+      .populate('job', 'title companyName companyEmail') ;
+
+      const studentId = application.student._id; 
+      const student = await Student.findOne({ userid: studentId },'name email resume coverLetter grade achievements transcripts');
+
+      const applicationWithStudentInfo = {
+        ...application.toObject(),
+        studentInfo: student, // Add the full student object to the response
+      };
 
     if (!application) {
       return res.status(404).json({ message: 'Application not found.' });
     }
-
-    // Send the application details as a response
-    return res.status(200).json(application);
+    return res.status(200).json(applicationWithStudentInfo);
 
   } catch (err) {
     console.error('Error fetching application:', err);

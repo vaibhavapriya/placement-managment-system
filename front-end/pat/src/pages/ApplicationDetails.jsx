@@ -52,33 +52,62 @@ function ApplicationDetails() {
             Go Back
           </button>
         </div>
-        <h2 className="text-3xl font-bold text-[#3D52A0] mb-6 border-b-2 border-[#7091E6] pb-2">
-          Application Details
-        </h2>
         {application ? (
           <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-[#3D52A0] mb-6 border-b-2 border-[#7091E6] pb-2">
+              {application.job?.title || 'Job Title Not Available'}
+            </h2>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Job Title:</strong> {application.job.title}
+              <strong className="text-[#3D52A0]">Company Name:</strong> {application.job?.companyName || 'Company Name Not Available'}
             </p>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Company Name:</strong> {application.job.companyName}
+              <strong className="text-[#3D52A0]">Company Email:</strong> {application.job?.companyEmail || 'Company email Not Available'}
             </p>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Student Name:</strong> {application.student.name}
+              <strong className="text-[#3D52A0]">Student Name:</strong> {application.student?.name || 'Student Name Not Available'}
             </p>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Student Email:</strong> {application.student.email}
+              <strong className="text-[#3D52A0]">Student Email:</strong> {application.studentInfo?.email || 'Student Email Not Available'}
             </p>
             <div>
-              <a href={application.resume} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                Resume
+              <a href={application.resume || '#'} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                {application.resume ? 'Resume' : 'Resume Not Available'}
+              </a>
+            </div>
+
+            {/* Safely access grade and transcripts */}
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Grade:</strong> {application.studentInfo?.grade || 'Grade Not Available'}
+            </p>
+            <div>
+              <a href={application.studentInfo.transcripts || '#'} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                {application.studentInfo?.transcripts ? 'Transcripts:' : 'Transcripts: Not Available'}
               </a>
             </div>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Status:</strong> {application.status}
+              <strong className="text-[#3D52A0]">Transcripts:</strong> {application.studentInfo?.transcripts || 'Transcripts Not Available'}
+            </p>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Candidate Note:</strong> {application.candidateNote || 'Candidate Note Not Available'}
+            </p>
+            <p className="text-[#4A4A6A]">
+              <strong className="text-[#3D52A0]">Status:</strong> {application.status || 'Status Not Available'}
             </p>
 
-            {/* Add other details you want to show */}
+            {/* Render feedback if available */}
+            {application.feedback?.length > 0 ? (
+              <div>
+                <strong className="text-[#3D52A0]">Feedback:</strong>
+                <ul>
+                  {/* Map through the feedback array and display each item */}
+                  {application.feedback.map((item, index) => (
+                    <li key={index} className="text-[#4A4A6A]">{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-[#4A4A6A]">No feedback provided yet.</p>
+            )}
           </div>
         ) : (
           <p>No application found.</p>

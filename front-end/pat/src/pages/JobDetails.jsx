@@ -95,12 +95,12 @@ const JobDetails = () => {
                 ))}
               </ul>
             </div>
-            <button
+            {/* <button
               onClick={handleApply}
               className="mt-4 py-2 px-6 w-full text-white bg-[#3D52A0] hover:bg-[#2E4292] rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#7091E6] focus:ring-offset-2"
             >
               Apply
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
