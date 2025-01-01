@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function Applications({ applications, error }) {
+function Applications({ applications}) {
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -35,7 +35,7 @@ function Applications({ applications, error }) {
       //refreshApplications(); // Refresh the application list
       setSelectedApplication(null); // Close update view
     } catch (error) {
-      console.error("Error updating application:", error);
+      console.error("Error updating application:",error);
       alert("Failed to update application.");
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ function Applications({ applications, error }) {
 
   return (
     <div className="p-6 bg-[#F7F9FF] text-[#3D52A0] rounded-lg shadow-md w-100">
-  {applications.length > 0 ? (
+    {applications.length > 0 ? (
     <div>
       <h3 className="text-2xl font-bold mb-4">{ job}</h3>
       <ul className="space-y-4">
