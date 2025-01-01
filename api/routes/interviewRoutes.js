@@ -1,5 +1,6 @@
 const express = require('express');
-const { scheduleInterview, getInterviewsByStudentId, bookSlotForInterview, getSlotsForInterview } = require('../controllers/interviewController');
+const { getInterviewsByStudentId, bookSlotForInterview, getSlotsForInterview } = require('../controllers/interviewController');
+const { scheduleInterview } = require('../controllers/scheduleInterview ')
 const router = express.Router();
 
 // POST: Schedule an interview
