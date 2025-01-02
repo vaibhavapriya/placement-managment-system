@@ -46,7 +46,7 @@ const Companyhome = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
-    setSelectedJob(null); 
+    setSelectedJob(""); 
   };
 
   const closeModal = () => {

@@ -85,9 +85,6 @@ function ApplicationDetails() {
               </a>
             </div>
             <p className="text-[#4A4A6A]">
-              <strong className="text-[#3D52A0]">Transcripts:</strong> {application.studentInfo?.transcripts || 'Transcripts Not Available'}
-            </p>
-            <p className="text-[#4A4A6A]">
               <strong className="text-[#3D52A0]">Candidate Note:</strong> {application.candidateNote || 'Candidate Note Not Available'}
             </p>
             <p className="text-[#4A4A6A]">
