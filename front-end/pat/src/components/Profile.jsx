@@ -25,7 +25,7 @@ function Profile() {
         const token = localStorage.getItem('token');  // Assuming token is saved in localStorage after login
   
         // Send token in Authorization header
-        const response = await axios.get(`http://localhost:5000/student/${id}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/student/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,  // Include token here
           }

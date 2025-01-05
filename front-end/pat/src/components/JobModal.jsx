@@ -11,7 +11,7 @@ const JobDetailsModal = ({ jobId, isOpen, closeModal }) => {
             // Fetch the job details when the modal is opened
             const fetchJob = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/jobs/${jobId}`);
+                    const response = await axios.get(`https://placement-managment-system.onrender.com/jobs/${jobId}`);
                     setJob(response.data);
                 } catch (err) {
                     setError('Error fetching job details');

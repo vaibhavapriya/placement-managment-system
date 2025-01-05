@@ -27,7 +27,7 @@ function Companyhome() {
 
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/jobs/c/${user}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/jobs/c/${user}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

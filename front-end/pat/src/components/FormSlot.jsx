@@ -28,7 +28,7 @@ function FormSlot({ interviewId, onClose }) {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:5000/interviews/slots/${interviewId}`,
+          `https://placement-managment-system.onrender.com/interviews/slots/${interviewId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ function FormSlot({ interviewId, onClose }) {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/interviews/slot/${interviewId}/${selectedSlot}`,
+        `https://placement-managment-system.onrender.com/interviews/slot/${interviewId}/${selectedSlot}`,
         { interviewId: interviewId, slotId: selectedSlot },
         {
           headers: {

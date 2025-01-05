@@ -23,7 +23,7 @@ app.options('*', cors());
 // Middleware
 app.use(cors()); // Use CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow your frontend
+  origin: 'https://cosmic-capybara-45892a.netlify.app/', // Allow your frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Authorization', 'Content-Type'],
 }));

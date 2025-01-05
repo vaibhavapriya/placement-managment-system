@@ -33,7 +33,7 @@ function FormApplication({ job, closeModal }) {
       formData.append('resume', resume); // Add the file to form data
       formData.append('candidateNote', candidateNote); // Add the candidate note to form data
 
-      const response = await axios.post(`http://localhost:5000/app/${jobId}`, formData, {
+      const response = await axios.post(`https://placement-managment-system.onrender.com/app/${jobId}`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // This header is important when sending file data

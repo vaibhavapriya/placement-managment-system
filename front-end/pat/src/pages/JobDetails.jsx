@@ -23,7 +23,7 @@ const JobDetails = () => {
         const fetchJobDetails = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:5000/jobs/${jobId}`, {
+                const response = await axios.get(`https://placement-managment-system.onrender.com/jobs/${jobId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setJob(response.data);

@@ -24,7 +24,7 @@ function Applications({ applications }) {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/app/applications/${applicationId}`,
+        `https://placement-managment-system.onrender.com/app/applications/${applicationId}`,
         { status, feedback },
         {
           headers: {

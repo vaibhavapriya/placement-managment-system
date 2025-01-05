@@ -57,7 +57,7 @@ const FormInterview = ({ jobId, closeModal, students }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/interviews/schedule",
+        "https://placement-managment-system.onrender.com/interviews/schedule",
         {
           jobId,
           slots,

@@ -33,7 +33,7 @@ const DashboardA2 = () => {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/dashboard/dashboard-metrics');
+        const { data } = await axios.get('https://placement-managment-system.onrender.com/dashboard/dashboard-metrics');
         setMetrics(data);
       } catch (error) {
         console.error('Error fetching metrics:', error);

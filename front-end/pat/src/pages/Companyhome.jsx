@@ -30,7 +30,7 @@ const Companyhome = () => {
   const fetchJobs = useCallback(async () => {
     if (!token) return alert('You must be logged in to post a job.');
     try {
-      const response = await axios.get(`http://localhost:5000/jobs/c/${user}`, {
+      const response = await axios.get(`https://placement-managment-system.onrender.com/jobs/c/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJobs(response.data.jobs || []);
@@ -88,7 +88,7 @@ const Companyhome = () => {
     }
   
     try {
-      const response = await axios.get(`http://localhost:5000/app/byJob/${jobId}`, {
+      const response = await axios.get(`https://placement-managment-system.onrender.com/app/byJob/${jobId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

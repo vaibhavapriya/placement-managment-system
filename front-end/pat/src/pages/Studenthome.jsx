@@ -21,7 +21,7 @@ function Studenthome() {
       }
 
       try {
-        const res = await axios.get('http://localhost:5000/jobs/', {
+        const res = await axios.get('https://placement-managment-system.onrender.com/jobs/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.data.jobs) {

@@ -17,7 +17,7 @@ const Login = () => {
     const handleLogin = async () => {
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/auth/login', { email, password });
+            const res = await axios.post('https://placement-managment-system.onrender.com/auth/login', { email, password });
             const { token, role, id } = res.data;
             localStorage.setItem('token', token);
             localStorage.setItem('userid', id);

@@ -16,10 +16,10 @@ function ApplicationDetails() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          navigate('/login'); // Redirect to login if no token
+          navigate('/'); // Redirect to login if no token
           return;
         }
-        const response = await axios.get(`http://localhost:5000/app/applications/${applicationId}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/app/applications/${applicationId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setApplication(response.data);

@@ -58,11 +58,11 @@ function FormDrive({ closeModal, job }) {
 
             // If editing an existing job, use PUT. If creating a new job, use POST.
             if (job && job._id) {
-                response = await axios.put(`http://localhost:5000/jobs/edit/${job._id}`, updatedJob, {
+                response = await axios.put(`https://placement-managment-system.onrender.com/jobs/edit/${job._id}`, updatedJob, {
                     headers: { Authorization: `Bearer ${token}` },
                 }); // Update existing job
             } else {
-                response = await axios.post('http://localhost:5000/jobs/newjob', updatedJob, {
+                response = await axios.post('https://placement-managment-system.onrender.com/jobs/newjob', updatedJob, {
                     headers: { Authorization: `Bearer ${token}` },
                 }); // Create new job
             }
@@ -78,7 +78,7 @@ function FormDrive({ closeModal, job }) {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96 max-h-[80vh] overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6 text-center">{job ? 'Edit Job' : 'Create New Drive'}</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex flex-col">

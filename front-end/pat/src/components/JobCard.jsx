@@ -34,7 +34,7 @@ function JobCard({ job , applications , setApplications}) {
       }
   
       try {
-        const response = await axios.get(`http://localhost:5000/app/byJob/${jobId}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/app/byJob/${jobId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,7 +57,7 @@ function JobCard({ job , applications , setApplications}) {
       }
     
       try {
-        const response = await axios.get(`http://localhost:5000/app/byJob/${job._id}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/app/byJob/${job._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

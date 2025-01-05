@@ -34,7 +34,7 @@ function EditProfile({ closeModal, studentProfile }) {
         }
 
         try {
-          const res = await axios.get(`http://localhost:5000/student/${user}`, {
+          const res = await axios.get(`https://placement-managment-system.onrender.com/student/${user}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -71,7 +71,7 @@ function EditProfile({ closeModal, studentProfile }) {
     console.log(profile);
 
     try {
-      await axios.put(`http://localhost:5000/student/${user}`, profile, {
+      await axios.put(`https://placement-managment-system.onrender.com/student/${user}`, profile, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

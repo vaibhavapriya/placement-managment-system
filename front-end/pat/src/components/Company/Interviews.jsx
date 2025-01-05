@@ -12,7 +12,7 @@ function Interviews() {
         const token = localStorage.getItem("token");
         const companyId = localStorage.getItem("userid");
         const response = await axios.get(
-          `http://localhost:5000/interviews/byCompany/${companyId}`,
+          `https://placement-managment-system.onrender.com/interviews/byCompany/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

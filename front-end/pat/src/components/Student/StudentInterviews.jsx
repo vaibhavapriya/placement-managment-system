@@ -32,7 +32,7 @@ function StudentInterviews() {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/interviews/byStudent/${studentId}`, {
+        const response = await axios.get(`https://placement-managment-system.onrender.com/interviews/byStudent/${studentId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

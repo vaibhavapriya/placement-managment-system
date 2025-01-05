@@ -30,7 +30,7 @@ const Signup = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:5000/auth/signup', formData);
+            const response = await axios.post('https://placement-managment-system.onrender.com/auth/signup', formData);
 
             if (response.status === 201) {
                 // Redirect to login page after successful signup
