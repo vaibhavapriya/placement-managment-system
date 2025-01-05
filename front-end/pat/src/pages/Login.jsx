@@ -28,7 +28,7 @@ const Login = () => {
             // Navigate based on role
             if (role === 'Student') navigate(`/student/${id}`);
             if (role === 'Company') navigate(`/company/${id}`);
-            if (role === 'Admin') navigate(`/admin${id}`);
+            if (role === 'Admin') navigate(`/admin/${id}`);
         } catch (err) {
             //setError(err.response.data.message || 'Something went wrong');
             console.error(err.response.data.message);

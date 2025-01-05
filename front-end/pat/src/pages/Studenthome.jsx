@@ -100,7 +100,7 @@ function Studenthome() {
                 : 'bg-gray-200'
             }`}
           >
-            Messages
+            Interviews
           </button>
         </div>
       </div>

@@ -47,93 +47,97 @@ function Interviews() {
       <ul className="space-y-4">
         {console.log(interviews)}
         {interviews.map((interview) => (
-          <li
-            key={interview._id}
-            className="border rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
-          >
-            {/* Student Information */}
-            <Link to={`/app/${interview.application._id}`}><p className="text-sm text-[#3D52A0] font-semibold">
+        <li
+          key={interview._id}
+          className="border rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300 max-w-3xl mx-auto mb-4"
+        >
+          {/* Student Information */}
+          
+            <p className="text-lg text-[#3D52A0] font-semibold mb-2">
               {interview.student?.name || "N/A"}
-            </p></Link>
-            <p className="text-sm text-[#6B6A85]">
-              Email: {interview.student?.email || "N/A"}
             </p>
+          
+          <p className="text-sm text-[#6B6A85] mb-1">
+            Email: {interview.student?.email || "N/A"}
+          </p>
 
-            {/* Job Information */}
-            <p className="text-sm text-[#6B6A85]">
-              Job Title: {interview.job?.title || "N/A"}
-            </p>
+          {/* Job Information */}
+          <p className="text-sm text-[#6B6A85] mb-1">
+            Job Title: {interview.job?.title || "N/A"}
+          </p>
 
-            {/* Application Status */}
-            <p className="text-sm font-medium text-[#8697C4]">
-              Application Status: {interview.application?.status || "N/A"}
-            </p>
-            <p className="text-sm text-[#6B6A85]">
-              Candidate Note: {interview.application?.candidateNote || "N/A"}
-            </p>
-            <a
-              href={interview.application?.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-500 hover:underline"
-            >
-              View Resume
-            </a>
-            <p className="text-sm text-[#6B6A85]"> Company feedback: </p>
-            <ul className="text-sm text-[#6B6A85]">
-            {interview.application?.feedback.length > 0 
+          {/* Application Status */}
+          <Link to={`/app/${interview.application._id}`}><p className="text-sm font-medium text-[#8697C4] mb-2 hover:text-blue-500 ">
+            Application Status: {interview.application?.status || "N/A"}
+          </p></Link>
+          <p className="text-sm text-[#6B6A85] mb-1 ">
+            Candidate Note: {interview.application?.candidateNote || "N/A"}
+          </p>
+          <a
+            href={interview.application?.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-blue-500 hover:underline mb-2 block"
+          >
+            View Resume
+          </a>
+
+          {/* Company feedback */}
+          <p className="text-sm text-[#6B6A85] mb-1">Company feedback:</p>
+          <ul className="text-sm text-[#6B6A85] mb-2">
+            {interview.application?.feedback.length > 0
               ? interview.application.feedback.map((feedbackItem, index) => (
                   <li key={index}>{feedbackItem}</li>
                 ))
-              : "N/A"
-            }
+              : "N/A"}
           </ul>
 
-            {/* Interview Information */}
-            <p className="text-sm text-[#6B6A85]">
-              Interview Type: {interview.interviewType || "N/A"}
-            </p>
-            <p className="text-sm text-[#6B6A85]">
-              Interview Date:{" "}
-              {new Date(interview.interviewDate).toLocaleString() || "N/A"}
-            </p>
-            <p className="text-sm text-[#6B6A85]">
-              Status: {interview.status || "N/A"}
-            </p>
+          {/* Interview Information */}
+          <p className="text-sm text-[#6B6A85] mb-1">
+            Interview Type: {interview.interviewType || "N/A"}
+          </p>
+          <p className="text-sm text-[#6B6A85] mb-1">
+            Interview Date:{" "}
+            {new Date(interview.interviewDate).toLocaleString() || "N/A"}
+          </p>
+          <p className="text-sm text-[#6B6A85] mb-2">
+            Status: {interview.status || "N/A"}
+          </p>
 
-            {/* Slot Information */}
-            {interview.slotBooked ? (
-              <>
-                <p className="text-sm text-[#6B6A85]">
-                  Slot Start:{" "}
-                  {new Date(interview.slotBooked.startTime).toLocaleString() || "N/A"}
-                </p>
-                <p className="text-sm text-[#6B6A85]">
-                  Slot End:{" "}
-                  {new Date(interview.slotBooked.endTime).toLocaleString() || "N/A"}
-                </p>
-              </>
-            ) : (
-              <p className="text-sm text-[#6B6A85]">No slot booked</p>
-            )}
+          {/* Slot Information */}
+          {interview.slotBooked ? (
+            <>
+              <p className="text-sm text-[#6B6A85] mb-1">
+                Slot Start:{" "}
+                {new Date(interview.slotBooked.startTime).toLocaleString() || "N/A"}
+              </p>
+              <p className="text-sm text-[#6B6A85] mb-2">
+                Slot End:{" "}
+                {new Date(interview.slotBooked.endTime).toLocaleString() || "N/A"}
+              </p>
+            </>
+          ) : (
+            <p className="text-sm text-[#6B6A85] mb-2">No slot booked</p>
+          )}
 
-            {/* Location or URL */}
-            {interview.location ? (
-              <p className="text-sm text-[#6B6A85]">Location: {interview.location}</p>
-            ) : interview.url ? (
-              <a
-                href={interview.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-blue-500 hover:underline"
-              >
-                Join Virtual Meeting
-              </a>
-            ) : (
-              <p className="text-sm text-[#6B6A85]">No location or URL available</p>
-            )}
-          </li>
-        ))}
+          {/* Location or URL */}
+          {interview.location ? (
+            <p className="text-sm text-[#6B6A85] mb-2">Location: {interview.location}</p>
+          ) : interview.url ? (
+            <a
+              href={interview.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-blue-500 hover:underline mb-2 block"
+            >
+              Join Virtual Meeting
+            </a>
+          ) : (
+            <p className="text-sm text-[#6B6A85] mb-2">No location or URL available</p>
+          )}
+        </li>
+      ))}
+
       </ul>
 
     </div>

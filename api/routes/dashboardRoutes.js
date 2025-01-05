@@ -3,11 +3,14 @@ const Application = require('../models/applicationSchema');
 const JobListing = require('../models/jobListingSchema');
 const User = require('../models/userSchema');
 const Company =require('../models/companySchema')
+const Interview = require('../models/interviewSchema');
+
 const router = express.Router();
 
 // Fetch dashboard metrics
 router.get('/dashboard-metrics', async (req, res) => {
   try {
+
     console.log("Dashboard metrics route hit");
     const totalApplications = await Application.countDocuments();
     const hiredCount = await Application.countDocuments({ status: 'Hired' });
