@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 function Applications({ applications }) {
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -53,9 +54,9 @@ function Applications({ applications }) {
             key={application._id}
             className="border rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
           >
-            <p className="text-sm text-[#3D52A0] font-semibold">
+            <Link to={`/app/${application._id}`}><p className="text-sm text-[#3D52A0] font-semibold">
               Student Name: {application.student.name}
-            </p>
+            </p></Link>
             <p className="text-sm text-[#6B6A85]">Email: {application.student.email}</p>
             <p className="text-sm text-[#6B6A85]">Grade: {application.student.grade}</p>
             <p className="text-sm font-medium text-[#8697C4]">

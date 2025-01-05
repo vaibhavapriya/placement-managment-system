@@ -2,6 +2,7 @@ import React,  { useEffect, useState }  from 'react';
 import axios from "axios";
 import FormDrive from "../components/FormDrive";
 import FormInterview from "../components/FormInterview";
+import { Link } from 'react-router-dom';
 
 function JobCard({ job , applications , setApplications}) {
 
@@ -88,8 +89,7 @@ function JobCard({ job , applications , setApplications}) {
 
       {isModalOpen && <FormDrive closeModal={closeModal} job={selectedJob} />}
       {isInterviewModalOpen && <FormInterview closeModal={closeInterviewModal} jobId={selectedJob._id} students={shortlistedApplications} />}
-
-      <h3 className="text-2xl font-semibold text-[#3D52A0]">{job.title}</h3>
+      <Link to={`/job/${job._id}`}><h3 className="text-2xl font-semibold text-[#3D52A0]">{job.title}</h3></Link>
       <p className="text-md text-[#6B6A85] mb-2">{job.description}</p>
       <p className="text-sm font-medium text-[#8697C4] mb-4">Status: {job.status}</p>
       <div className="mt-4 flex flex-wrap gap-4">

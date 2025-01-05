@@ -8,6 +8,7 @@ import Applications from "../components/Company/Applications";
 import Interviews from "../components/Company/Interviews";
 
 const Companyhome = () => {
+  const [activeSection, setActiveSection] = useState('job');
   const [jobs, setJobs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -123,26 +124,47 @@ const Companyhome = () => {
       </button>
       </div>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 px-6 w-screen">
-        {/* job secton */}
-        <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">
-            {loading ? <div>Loading jobs...</div> : jobs.length > 0 ? jobs.map(job => (
-              <JobCard key={job._id} job={job} applications={applications} setApplications={setApplications} />
-            )):(<p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>)}
-        </div>
-        {/* <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">
-            {loading ? <div>Loading jobs...</div> : jobs.map(job => (
-              <JobCard key={job._id} job={job} openModal={openModal} openInterviewModal={openInterviewModal} onViewApplications={onViewApplications} />
-            ))}
-        </div> */}
-          {/* <div> {jobs.length > 0 ?(<JobCard key={job._id} job={job} openModal={openModal} openInterviewModal={openInterviewModal} />):(<p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>)} </div> */}
+      <div className="min-h-screen bg-[#F7F9FF]">
+      {/* Button section for toggling between Job and Interview */}
+      <div className="flex justify-center mb-4">
+        <button
+          className={`text-lg px-4 py-2 mr-4 ${activeSection === 'job' ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+          onClick={() => setActiveSection('job')}
+        >
+          Job
+        </button>
+        <button
+          className={`text-lg px-4 py-2 ${activeSection === 'interview' ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+          onClick={() => setActiveSection('interview')}
+        >
+          Interview
+        </button>
+      </div>
+
+      {/* Section Content based on activeSection */}
+      {activeSection === 'job' && (
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 px-6 w-screen">
+          {/* Job Section */}
+          <div className="col-span-1 md:max-h-[80vh] md:overflow-y-auto">
+            {loading ? (
+              <div>Loading jobs...</div>
+            ) : jobs.length > 0 ? (
+              jobs.map((job) => (
+                <JobCard key={job._id} job={job} applications={applications} setApplications={setApplications} />
+              ))
+            ) : (
+              <p className="text-center text-lg text-[#8697C4]">No jobs found for your company.</p>
+            )}
+          </div>
 
           {/* Applications Section */}
-        <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <Applications applications={applications} />
-        </div>
-      </section>
-        <Interviews />
+          </div>
+        </section>
+      )}
+      {activeSection === 'interview' && <Interviews />}
+    </div> 
       </div>
     </div>
   );

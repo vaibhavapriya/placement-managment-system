@@ -75,7 +75,7 @@ function FormApplication({ job, closeModal }) {
 
           {/* Why Should We Select You */}
           <div>
-            <label className="block font-medium text-gray-700">Why Should We Select You?</label>
+            <label className="block font-medium text-gray-700">Anything to say</label>
             <textarea
               value={candidateNote}
               onChange={(e) => setCandidateNote(e.target.value)}

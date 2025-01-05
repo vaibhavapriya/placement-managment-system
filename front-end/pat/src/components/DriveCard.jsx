@@ -30,7 +30,7 @@ function DriveCard({ job }) {
 
                 {/* Description */}
                 <p className="text-sm text-[#6B6A85]">{job.description}</p>
-                <button className="text-[#7091E6] hover:underline focus:outline-none"><Link to={`/job/${job._id}`}>delailed</Link></button>
+                <Link to={`/job/${job._id}`}><button className="text-[#7091E6] hover:underline focus:outline-none">delailed</button></Link>
             </div>
 
             {/* Apply Button */}

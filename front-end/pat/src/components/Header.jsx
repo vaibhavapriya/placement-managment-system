@@ -36,7 +36,7 @@ function Header() {
           Profile
         </button>
       </div>
-      <div className="text-xl font-bold">App Logo</div>
+      <div className="text-xl font-bold">PAT </div>
 
       {/* Right section: Logout */}
       <div className="flex space-x-4">

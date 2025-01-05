@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 function Interviews() {
   const [interviews, setInterviews] = useState([]);
@@ -42,7 +43,7 @@ function Interviews() {
 
   return (
     <div className="p-6 bg-[#F7F9FF] text-[#3D52A0] rounded-lg shadow-md">
-      <h3 className="text-2xl font-bold mb-4">Interviews for this company:</h3>
+      <h3 className="text-2xl font-bold mb-4">Interviews</h3>
       <ul className="space-y-4">
         {console.log(interviews)}
         {interviews.map((interview) => (
@@ -51,9 +52,9 @@ function Interviews() {
             className="border rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Student Information */}
-            <p className="text-sm text-[#3D52A0] font-semibold">
-              Student Name: {interview.student?.name || "N/A"}
-            </p>
+            <Link to={`/app/${interview.application._id}`}><p className="text-sm text-[#3D52A0] font-semibold">
+              {interview.student?.name || "N/A"}
+            </p></Link>
             <p className="text-sm text-[#6B6A85]">
               Email: {interview.student?.email || "N/A"}
             </p>

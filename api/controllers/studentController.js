@@ -1,6 +1,7 @@
 // Controllers/applicationController.js
 const Application = require('../models/applicationSchema');
 const Student = require('../models/studentSchema'); 
+const User = require('../models/userSchema')
 
 exports.editProfile = async (req, res) => {
     try {
@@ -27,10 +28,15 @@ exports.editProfile = async (req, res) => {
     try {
         //const student = await Student.findOne({ userid: req.params.id }).populate('applications');
       const  userId  = req.user.id; // Assuming `userId` is extracted from the token by the `authenticate` middleware.
+      
+
       const student = await Student.findOne({ userid: userId }); // Populate applications if needed..populate('applications')
       if (!student) {
-        return res.status(404).json({ message: userId });
+        const user = await User.findById(userId)
+        return res.status(200).json({ user });
+        console.log(user)
       }
+      
        
       res.status(200).json({student});
     } catch (error) {
